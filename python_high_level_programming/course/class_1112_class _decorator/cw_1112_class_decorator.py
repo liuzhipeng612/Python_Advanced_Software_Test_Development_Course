@@ -13,18 +13,15 @@
 
 # 第一题 ： 通过装饰器实现单例模式，只要任意一个类使用该装饰器装饰，那么就会变成一个单例模式的类。(面试真题)
 class DecoratorClass(object):
-    def __init__(self):
+    def __init__(self):  # 如果采用闭包函数类型作为类函数，将被装饰类的函数func作为装饰器__init__的参数，执行被装饰类的时候，该类的函数会变为类装饰器的属性
         pass
-
-    def __new__(cls, *args, **kwargs):
-        return super().__new__(cls)
 
     def __call__(self, func, *args, **kwargs):
         def wrapper(*args, **kwargs):
             print(F"我是类装饰器{self.__class__.__name__}新增功能1")
-            result = func(*args, **kwargs)
+            res = func(*args, **kwargs)
             print(F"我是类装饰器{self.__class__.__name__}新增功能2")
-            return result
+            return res
 
         return wrapper
 
@@ -42,14 +39,5 @@ class MyClassA1(object):
 myclassa1 = MyClassA1("刀刀", "18")
 print(id(myclassa1), myclassa1.name)
 print(id(myclassa1), myclassa1.my1())
-myclassa2 = MyClassA1("安安", "19")
-print(id(myclassa1), myclassa2.name)
-print(id(myclassa1), myclassa2.my1())
-# myclassa3 = MyClassA1()
-# print(id(myclassa3.my1()), myclassa3.my1())
-# myclassa4 = MyClassA1()
-# print(id(myclassa4.my1()), myclassa4.my1())
-# myclassa5 = MyClassA1()
-# print(id(myclassa5.my1()), myclassa5.my1())
 
 # 第二题：研究一个函数可不可以使用多个装饰器来装饰，如果可以请描述装饰器过程，如果不可以，请说出为什么（简答题）
