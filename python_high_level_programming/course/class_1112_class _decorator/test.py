@@ -17,11 +17,14 @@ class DecoratorClass(object):
         self._func = func
 
     def __call__(self, *args, **kwargs):
-        def wrapper():
-            print(F"我是类装饰器{self.__class__.__name__}新增功能1")
+        print(F"我是类装饰器{self.__class__.__name__}新增功能1")
+        def wrapper(*args, **kwargs):
+
             res = self._func(*args, **kwargs)
-            print(F"我是类装饰器{self.__class__.__name__}新增功能2")
+
             return res
+
+        print(F"我是类装饰器{self.__class__.__name__}新增功能2")
 
         return wrapper
 
