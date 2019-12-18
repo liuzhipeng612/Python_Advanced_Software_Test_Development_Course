@@ -1,20 +1,30 @@
 一、必做题
 1.全局路由和子路由的作用以及路由匹配规则
-全局路由和子路由的作用：就是使views里面处理数据的函数与请求的url建立映射关系。使请求到来之后，根据urls.py里的关系条目，去查找到与请求对应的处理方法，从而返回给客户端。
+    全局路由和子路由的作用：
+        a、使views里面处理数据的函数与请求的url建立映射关系。
+        b、发起请求后，根据urls.py里的关系条目，去查找与请求对应的处理方法，从而返回给客户端。
 
-路由匹配规则：1、urlpatterns为固定名称列表
-2、列表中的一个元素代表一条路由信息
-3、从上到下来匹配，如果能匹配上，Django会自动调用path函数的第二个参数指定的图示（函数视图或者类视图）
-4、如果匹配不上，会自动抛出一个404异常（默认为404页面，状态码为404）
-5、一旦匹配成功，不会继续往下匹配
-6、如果path函数的第二个参数为include，那么会进入到子路由中去匹配
+    路由匹配规则：
+        a、发起请求后，使用入参去匹配urls.py中urlpatterns列表的值，urlpatterns为固定名称的列表
+        b、urlpatterns列表中的元素分别代表一条路由信息
+        c、从上往下匹配与入参对应的元素
+            · 匹配上，Django会自动调用path函数的第二个参数指定的视图（函数视图或者类视图）并停止匹配
+            · 未匹配上，则抛出404异常（默认为404页面，状态码为404）
+            · 如果path函数的第二个参数为include，则进入include的参数对应元素的子路由中进行匹配，子路由匹配规则与全局路由相同
 
 
 2.搭建Django工程
 提示：
-
 	a.创建一个应用, 并通过视图(函数视图或者类视图)来展示内容
-
+	    · 有两种方法实现创建应用
+	        · 使用PyCharm专业版，在创建工程时选择Django并输入子应用名称
+	        · 使用命令>python manage.py startapp name(name为子应用名称)
+	            · 在settings.py全局配置文件中的INSTALLED_APPS列表中添加app的信息
+	                · 填写格式为：'django_views.apps.DjangoViewsConfig',django_views为应用名称，DjangoViewsConfig首字母大写
+	            · 在django_views/views.py中创建相关功能（视图函数）
+	                · def index(request):
+                        return HttpResponse("<h1>可优村长你好啊！</h1>")
+                · 在django_rest_framework/urls.py全局路由表中添加路由信息
 	b.把演练效果录屏上传(推荐)或者将效果截图上传
 
 
