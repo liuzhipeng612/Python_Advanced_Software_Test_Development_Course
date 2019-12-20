@@ -5,30 +5,55 @@
         b、发起请求后，根据urls.py里的关系条目，去查找与请求对应的处理方法，从而返回给客户端。
 
     路由匹配规则：
-        a、发起请求后，使用入参去匹配urls.py中urlpatterns列表的值，urlpatterns为固定名称的列表
+        a、发起请求后，使用请求路径去匹配urls.py中urlpatterns列表的值，urlpatterns为固定名称的列表
         b、urlpatterns列表中的元素分别代表一条路由信息
-            · urlpatterns = [
+            - urlpatterns = [
                     path('admin/', admin.site.urls),
                     path('index/', index),#一条路由信息，第一个参数index/代表的是请求目录或地址，
                 ]                         #第二个参数index为子应用中views模块的视图名称
-        c、从上往下匹配与请求路径对应的元素
-            · 元素中包含请求路径的关键字，即匹配上，Django会自动调用path函数的第二个参数指定的视图（函数视图或者类视图）并停止匹配
-            · 元素中不包含请求路径的关键字，即未匹配上，则抛出404异常（默认为404页面，状态码为404）
-            · 如果path函数的第二个参数为include，则进入include的参数对应元素的子路由中进行匹配，子路由匹配规则与全局路由相同
+        c、函数视图、类视图和子路由可以作为urlpatterns的元素
+            - 函数视图作为元素：直接使用函数名作为path的第二个参数
+                · path('index/', index)
+            - 类视图作为元素：使用类方法名.as_view()作为path的第二个参数
+                · path('index/', HomeIndex.as_view())
+            - 子路由作为元素：如果path函数的第二个参数为include，则进入include的参数对应元素的子路由中进行匹配，子路由匹配规则与全局路由相同
+        d、从上往下匹配与请求路径对应的元素
+            - 元素中包含请求路径的关键字，即匹配上，Django会自动调用path函数的第二个参数指定的视图（函数视图或者类视图）并停止匹配
+            - 元素中不包含请求路径的关键字，即未匹配上，则抛出404异常（默认返回为404页面，状态码为404）
+
 
 
 2.搭建Django工程
 提示：
 	a.创建一个应用, 并通过视图(函数视图或者类视图)来展示内容
-	    · 有两种方法实现创建应用
-	        · 使用PyCharm专业版，在创建工程时选择Django并输入子应用名称
-	        · 使用命令>python manage.py startapp name(name为子应用名称)
-	            · 在settings.py全局配置文件中的INSTALLED_APPS列表中添加app的信息
-	                · 填写格式为：'django_views.apps.DjangoViewsConfig',django_views为应用名称，DjangoViewsConfig首字母大写
-	            · 在django_views/views.py中创建相关功能（视图函数）
-	                · def index(request):
+	    - 创建项目
+	    - 创建子应用
+	        · 有两种方法实现创建应用
+                · 使用PyCharm专业版，在创建工程时选择Django并输入子应用名称
+                · 使用命令python manage.py startapp name(name为子应用名称)
+        - 全局配置文件中添加应用信息
+            · 在settings.py全局配置文件中的INSTALLED_APPS列表中添加app的信息
+                · 填写格式为：'django_views.apps.DjangoViewsConfig',django_views为应用名称，DjangoViewsConfig首字母大写
+        - 编写子应用相关功能
+            · 在django_views/views.py中创建相关功能（函数视图或者类视图）
+                    · def index(request):   #函数视图
                         return HttpResponse("<h1>可优村长你好啊！</h1>")
+                    · class HomeIndex(View):    #类视图    同时需要导入from django.views import View
+                        def get(self,request):
+                            return HttpResponse("<h1>可优村长你好啊！</h1>")
+        - 路由表中添加路由信息
+            · 全局路由表中直接添加路由信息    #一步到位
                 · 在django_rest_framework/urls.py全局路由表中添加路由信息，即urlpatterns添加元素。
+                    · 具体方法见“路由匹配规则”C中的类视图作为元素
+            · 在全局路由中添加子路由信息     #先匹配全局路由，匹配上后进入子路由再次匹配具体路由信息
+                · 在django_views中创建urls.py路由文件
+                    · 在django_views/urls.py配置路由信息   #需导入子应用views.py模块的视图名称，from .views import HomeIndex 具体规则与全局路由一致
+                · 在全局路由中添加子路由元素参数include
+        - 启动Django服务
+            · 终端运行命令python manage.py runserver
+        - 使用浏览器访问服务器地址对应路径
+            · http://127.0.0.1:8000/index/
+
 	b.把演练效果录屏上传(推荐)或者将效果截图上传
 
 
