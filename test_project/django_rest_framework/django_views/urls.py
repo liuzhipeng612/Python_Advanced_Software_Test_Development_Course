@@ -16,10 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 # from django_views.views import index
-# from django_views.views import HomeIndex
-from django.urls import include
-
+from django_views.views import HomeIndex
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('django_views/', include('django_views.urls'))
+    path('HomeIndex/', HomeIndex.as_view())
 ]

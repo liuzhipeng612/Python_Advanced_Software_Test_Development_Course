@@ -17,7 +17,7 @@ from django.views import View
 
 class HomeIndex(View):
     def get(self, request):
-        return HttpResponse("<h1这个是GET方法请求的返回结果</h1>")
+        return HttpResponse("<h1>这个是GET方法请求的返回结果</h1>")
 
     def post(self, request):
         return HttpResponse("<h1>这个是POST方法请求的返回结果</h1>")
