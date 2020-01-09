@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -20,6 +21,7 @@ class HomeIndex(View):
         return HttpResponse("<h1>这个是GET方法请求的返回结果</h1>")
 
     def post(self, request):
+        # print(json.loads(request.body.decode('utf-8')))
         return HttpResponse("<h1>这个是POST方法请求的返回结果</h1>")
 
     def put(self, request):
