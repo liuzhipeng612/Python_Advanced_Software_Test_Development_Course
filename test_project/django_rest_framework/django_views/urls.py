@@ -19,5 +19,6 @@ from django.urls import path
 from django_views.views import HomeIndex
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('HomeIndex/', HomeIndex.as_view())
+    # path('HomeIndex/', HomeIndex.as_view())
+    path('HomeIndex/<int:pk>/', HomeIndex.as_view())
 ]

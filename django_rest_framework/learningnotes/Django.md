@@ -1,3 +1,57 @@
+### 目录
+
+##### 五、路由
+
+###### 1、简介
+
+###### 2、主路由
+
+###### 3、子路由
+
+##### 六、视图
+
+###### 1、定义
+
+###### 2、分类
+
+##### 七、MVT模式和两种开发模式
+
+###### 1、介绍
+
+###### 2、两种开发模式
+
+##### 八、请求与响应
+
+###### 1、请求参数类型
+
+###### 2、响应
+
+##### 九、ORM框架
+
+###### 1、定义
+
+###### 2、步骤
+
+###### 3、初探
+
+###### 4、数据库模型解析
+
+###### 5、admin站点
+
+##### 十、数据库操作
+
+###### 1、简介
+
+###### 2、演练数据库表相关操作
+
+###### 3、c（Create）
+
+###### 4、r（retrieve）
+
+###### 5、u（update）
+
+###### 6、d（delete）
+
 ### 一、搭建Django环境
 
 ##### 1.安装Python环境
@@ -301,6 +355,139 @@ python manage.py startapp name
   - 适用性、拓展性非常好
   - 适合多终端运行同一套接口（PC、APP、小程序等）
 
-### 四、
+### 四、请求、响应和模式类定义
 
-### 五、
+##### 1、请求参数类型
+
+- 前端向后端的传参方式
+
+  - 查询字符串传参
+
+    - 格式：url?xx=aa&yy=bb
+
+  - 请求体传参
+
+    - form表单：x-www-form-urlencoded
+    - json数据格式：{"x":1,"y":2}
+    - 上传文件
+
+  - 路径传参
+
+    - url路径中的参数
+
+      - 命名参数
+      - 未命名参数
+
+    - 路径格式：url/pk/
+
+    - 路由格式：
+
+      ```python
+      urlpatterns = [
+          path('admin/', admin.site.urls),
+          path('HomeIndex/<int:pk>/', HomeIndex.as_view())
+      ]
+      ```
+
+    - 视图格式：
+
+      ```python
+      def post(self, request,pk):
+          print(pk)
+          return HttpResponse("<h1>这个是POST方法请求的返回结果</h1>")
+      ```
+
+  - 请求头传参
+
+    - 在headers中填入键值对
+
+- 后端接收方式
+
+  - 查询字符串：使用request.GET对返回QueryDict对象（伪字典）的属性进行获取，可以通过QueryDict的[]、get()和getlist()方法来获取对应的数据。
+
+    - []与字典功能一致，填入键可获取值
+    - get()用来获取请求参数中只有单个key的数据
+    - getlist()用来获取请求参数中有重复key的数据
+
+  - 请求体传参
+
+    - from表单：使用request.POST对返回的QueryDict对象的属性进行获取可以通过QueryDict的[]、get()和getlist()方法来获取对应的数据。
+      - []与字典功能一致，填入键可获取值
+      - get()用来获取请求参数中只有单个key的数据
+      - getlist()用来获取请求参数中有重复key的数据
+
+  - json数据格式：使用request.body获取返回的bytes类型数据，并使用decode('utf-8')将字节类型解码转换成字符串。然后倒入json模块，将字符串装换成字典。
+
+    ```python
+    import json
+    from django.http import HttpResponse
+    from django.views import View
+    
+    class HomeIndex(View):
+        def post(self, request):
+            print(json.loads(request.body.decode('utf-8')))
+            return HttpResponse("<h1>这个是POST方法请求的返回结果</h1>")
+    
+    ```
+
+    
+
+  - 上传文件：使用request.FILES获取文件数据
+
+  - 路径传参：在路由中定义路径参数，格式：/<ini:pk>/，路径参数类型转换器包含int、slug、uuid等，在代码中直接调用pk获取传参，如果匹配不上直接返回404页面
+
+  - 请求头传参：使用request.META对返回的dict进行取值。
+
+    - []填入键可获得值
+
+    - get()填入键获得值
+
+    - 键格式：'HTTP_AOPSID'，HTTP_作为前缀，_请求头参数key大写
+
+    - ```python
+      request.META.get('HTTP_AOPSID')
+      ```
+
+##### 2、响应
+
+- 视图中必须返回HttpResponse对象或者子对象
+
+- HttpResponse(content=响应体，content_type=响应体数据类型，status=状态码)
+
+  - HttpResponse第一个参数content为响应体（字符串）
+  - 第二个参数Content-Type，指定响应数据格式
+  - 第三个参数status为响应状态码，默认为200
+
+- jsonRespone
+
+  -  JsonResponse第一个参数data，默认情况只能传递字典类型的数据
+
+  - 如果第一个参数为费字典类型，那么需要指定safe=False
+
+    ```python
+    def get(self, request, pk):
+        data = {
+            'name': 'daodao',
+            'age': '18',
+            'gender': '男'
+        }
+        return JsonResponse(data, safe=False)
+    ```
+
+##### 2、定义Projects模型类
+
+- 什么是模型类？
+  - 怎么定义模型类
+
+### 五、ORM框架
+
+##### 1、定义
+
+- 把类和对象进行映射
+- 通过类和对象就能操作它所对应表格中的数据（CRUD）
+
+##### 2、步骤
+
+- 配置数据库连接信息
+  - 创建数据库和用户
+    - CREATE 
