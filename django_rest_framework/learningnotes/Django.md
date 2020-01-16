@@ -490,4 +490,87 @@ python manage.py startapp name
 
 - 配置数据库连接信息
   - 创建数据库和用户
-    - CREATE 
+    
+    - 尽量使用工具
+    - 少使用代码
+    
+    ```mysql
+    CREATE DATABASE `django` CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
+    # GRANT ALL PRIVILEGES ON *.* TO 'daodao'@'%' IDENTIFIED BY '123456';
+    CREATE USER `daodao`@`localhost` IDENTIFIED WITH mysql_native_password BY '123456';
+    
+    GRANT Alter, Alter Routine, Create, Create Routine, Create Temporary Tables, Create User, Create View, Delete, Drop, Event, Execute, File, Grant Option, Index, Insert, Lock Tables, Process, References, Reload, Replication Client, Replication Slave, Select, Show Databases, Show View, Shutdown, Super, Trigger, Update ON *.* TO `daodao`@`localhost`;
+    
+    flush privileges;
+    
+    ```
+    
+  - Django配置数据库信息
+  
+    - 需要配置多个数据库，只需要添加一个雷瑟default格式的键值对，值为字典。
+  
+    ```python
+    DATABASES = {
+        'default': {
+            # 'ENGINE': 'django.db.backends.sqlite3', # Django默认的数据库为sqlite3
+            'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
+            'NAME': 'django',  # 数据库名
+            'USER': 'root',  # 数据库用户名
+            'PASSWORD': '123456',  # 数据库密码
+            'HOST': 'localhost',  # 数据库主机域名或者IP
+            'PORT': 3306  # 数据库端口
+        }
+    }
+    ```
+  
+  - PyCharm安装mysqlclient
+  
+    - 尽量使用PyCharm安装
+  
+    - 使用命令安装及相关依赖
+  
+      ```python
+      #Debian /Ubuntu
+      sudo apt-get install python-dev default-libmysqlclient-dev
+      #Red Hat /CentOS
+      sudo yum install python-devel mysql-devel
+      #macOS(Homebrew)
+      brew install mysql-client
+      #安装mysqlclient
+      pip install mysqlclient
+      ```
+  
+    - 在models.py中定义模型类
+  
+      ```python
+    from django.db import models
+      
+      
+      # Create your models here.
+      #创建模型类表
+      class Person(models.Model):
+          first_name = models.CharField(max_length=30)
+          last_name = models.CharField(max_length=30)
+      ```
+    
+    - 迁移
+    
+      - 对应python环境中运行迁移命令
+    
+      ```python
+      python manage.py makemigrations # 准备数据
+      python manage.py migrate # 迁移数据
+      ```
+    
+      
+    
+    - 通过类和对象操作完成数据库增删改查操作
+  
+  3、初探
+  
+  - 在projects/models.py中定义Model
+  - 迁移
+  - ORM的作用
+    - 以后不再写SQL语句
+      - 生成规范的SQL，可防止SQL注入
+
