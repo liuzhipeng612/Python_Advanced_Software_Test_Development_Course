@@ -558,7 +558,7 @@ python manage.py startapp name
       - 对应python环境中运行迁移命令
     
       ```python
-      python manage.py makemigrations # 准备数据
+      python manage.py makemigrations # 准备迁移数据
       python manage.py migrate # 迁移数据
       ```
     
