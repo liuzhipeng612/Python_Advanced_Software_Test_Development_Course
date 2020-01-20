@@ -568,9 +568,40 @@ python manage.py startapp name
   
   3、初探
   
+  ```python
+  self.name = name
+  self.verbose_name = verbose_name  # 属性名
+  self._verbose_name = verbose_name  # Store original for deconstruction
+  self.primary_key = primary_key	# 主键名
+  self.max_length, self._unique = max_length, unique # 最大长度
+  self.blank, self.null = blank, null # bank允许不传值，null允许该字段为空
+  self.remote_field = rel # 远程字段
+  self.is_relation = self.remote_field is not None # 是关系
+  self.default = default	# 默认
+  self.editable = editable # 可编辑的
+  self.serialize = serialize # 连载
+  self.unique_for_date = unique_for_date # 唯一的日期
+  self.unique_for_month = unique_for_month # 唯一的月份
+  self.unique_for_year = unique_for_year	#唯一的年份
+  if isinstance(choices, collections.abc.Iterator):
+  choices = list(choices)
+  self.choices = choices or []
+  self.help_text = help_text	# 描述文本
+  self.db_index = db_index # 表的索引
+  self.db_column = db_column # 表的列 
+  self._db_tablespace = db_tablespace	# 表的课哦克难攻坚
+  self.auto_created = auto_created # 自动创建
+  ```
+  
+  
+  
   - 在projects/models.py中定义Model
   - 迁移
   - ORM的作用
     - 以后不再写SQL语句
       - 生成规范的SQL，可防止SQL注入
+  
+  ###### 4、数据库模型解析
+  
+  ###### 5、admin站点
 
