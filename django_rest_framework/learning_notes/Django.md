@@ -741,40 +741,40 @@ python manage.py startapp name
 - 获取一个数据表的所有记录
 
   - 返回所有记录组成的模型对象集合（queryset查询集）
+  - 获取一张表中的所有记录
+    - 调用all()方法，返回QuerySet对象
+    - QuerySet对象相当于一个高性能的列表（惰性加载）,QuerySet对象中存放的是模型类对象
+    - 支持列表的数字索引功能（返回的是一个模型类对象）、切片操作（返回的依然是一个QuerySet对象）、不支持负值查询
+    - QuerySet对象.first()可以获取第一个元素，QuerySet对象.last()获取最后一个元素
 
   ```python
   class IndexView(View):
       def get(self, request):
-          # 查询操作
-          # #获取一张表中的所有记录
-          # #1、调用all()方法，返回QuerySet对象
-          # #2、QuerySet对象相当于一个高性能的列表（惰性加载）,QuerySet对象中存放的是模型类对象
-          # #3、支持列表的数字索引功能（返回的是一个模型类对象）、切片操作（返回的依然是一个QuerySet对象）、不支持负值查询
-          # #4、QuerySet对象.first()可以获取第一个元素，QuerySet对象.last()获取最后一个元素
-          # qs = Projects.objects.all()
-          # for i in qs:
-          #     print(i.name)
+          qs = Projects.objects.all()
+          for i in qs:
+              print(i.name)
           return HttpResponse("查询项目成功")
   ```
 
-  
-
 - 获取指定记录
 
-  - get
+  - get()获取某个指定的记录
+    - 如果没有查询到记录会报错，如果查询到多个记录也会报错，只有返回一条记录才不会报错
+    - 返回的是模型类对象
+    - get方法最好使用主键或者唯一键去查询
 
   ```python
-  # 二、获取某个指定的记录，使用get()
-          # 1、如果没有查询到记录会报错，如果查询到多个记录也会报错，只有返回一条记录才不会报错
-          # 2、返回的是模型类对象
-          # 3、get方法最好使用主键或者唯一键去查询
+  class IndexView(View):
+      def get(self, request):
           qs = Projects.objects.get(id=1)
+          return HttpResponse("查询项目成功")
   ```
 
-  - filter
+  - filter()获取多条记录
 
   ```python
-  # 三、获取多条记录，使用filter()
+  class IndexView(View):
+      def get(self, request):
           qs = Projects.objects.filter(id=1)
           qs = Projects.objects.filter(leader__contains="某人")  # 一条数据的某字段中包含xx内容
           qs = Projects.objects.filter(name__in=["项目1", "项目2"])  # 查看分别在集合中对应的项目
