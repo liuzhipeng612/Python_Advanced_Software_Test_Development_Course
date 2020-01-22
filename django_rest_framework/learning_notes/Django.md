@@ -542,8 +542,10 @@ python manage.py startapp name
   
     - 在models.py中定义模型类
   
+      - 嵌套Meta类可以更改表明
+    
       ```python
-    from django.db import models
+      from django.db import models
       
       
       # Create your models here.
@@ -551,6 +553,10 @@ python manage.py startapp name
       class Person(models.Model):
           first_name = models.CharField(max_length=30)
           last_name = models.CharField(max_length=30)
+          class Meta:
+              # 可以在Meta中使用db_table自定义表名
+              db_table = "django_views_TestTeams"
+              verbose_name = "测试团队"
       ```
     
     - 迁移
