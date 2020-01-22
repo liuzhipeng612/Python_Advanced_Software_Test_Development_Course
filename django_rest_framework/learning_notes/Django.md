@@ -1,5 +1,61 @@
 ### 目录
 
+##### 一、Django
+
+##### 1、简介
+
+- 为什么要使用框架来开发？
+
+##### 2、Django VS Flask
+
+##### 3、Django是什么？
+
+##### 4、特点
+
+- 提供创建项目工程自动化工具
+- 数据库ORM支持
+- 模板
+- 表单
+- Admin管理站点
+- 文件管理
+- 认证权限
+- session机制
+- 缓存
+
+##### 二、创建工程
+
+##### 1、创建虚拟环境
+
+##### 2、安装Django
+
+##### 3、创建项目
+
+##### 4、运行项目
+
+##### 5、项目结构
+
+##### 6、修改默认时区
+
+##### 三、创建子应用
+
+##### 1、定义
+
+##### 2、创建
+
+##### 3、注册
+
+##### 4、创建视图
+
+##### 5、添加路由
+
+##### 6、子应用结构
+
+
+
+
+
+
+
 ##### 五、路由
 
 ###### 1、简介
@@ -571,6 +627,8 @@ python manage.py startapp name
       
     
     - 通过类和对象操作完成数据库增删改查操作
+    
+      - 导入数据
   
   3、初探
   
@@ -609,5 +667,85 @@ python manage.py startapp name
   
   ###### 4、数据库模型解析
   
+  - 创建interfaces应用
+  
   ###### 5、admin站点
+  
+  - 创建管理员用户
+    - python manage.py createsuperuser
+
+### 十、数据库操作
+
+###### 1、简介
+
+- Django提供了一套抽象的API，让我们对数据库表进行CRUD（create,retrivev,update and delete objects）操作
+- 简化对数据库的操作
+
+###### 2、演练数据库表相关操作
+
+- 可以使用Shell
+
+  ```python
+  # 安装ipython
+  pip install -9 https://pypi.douban.com/simple ipython
+  python manage.py shell -i ipython
+  #查看所有项目
+  Projects.objects.all()
+  ```
+
+- 打开数据库日志记录
+
+  - %PROGRAMDATA%\MySQL Server x.x\my.ini
+
+  ```python
+  #General and show logging.
+  log-output=FILE
+  general-log=1
+  general_log_file="mysql_keyou.log"
+  ```
+
+  - 重启之后生效
+
+###### 3、c（Create）
+
+*一个模型类相当于一个表（table）*
+
+*一个模型类对象相当于一条数据（record）*
+
+- 使用模型内构造方法
+
+  ```python
+  class IndexView(View):
+      def get(self, request):
+          one_project = Projects(name="国产大飞机", leader="xxx院士", tester="所见", programmer="龙的传人",
+                                 publish_app="国产大飞机C919应用", desc="项目简介")
+          # 调用模型类对象save()才能执行sql语句
+          one_project.save()
+          return HttpResponse("创建项目成功")
+  ```
+
+- 使用create
+
+  ```python
+  class IndexView(View):
+      def get(self, request):
+          one_project = Projects.objects.create(name="国产大飞机3", leader="xxx院士", tester="所见", programmer="龙的传人",
+                                                publish_app="国产大飞机C919应用", desc="项目简介")
+          Interfaces.objects.create(name="国产大飞机C919登录接口", tester="Addoil", project=one_project)
+          # Interfaces.objects.create(name="国产大飞机C919登录接口", tester="Addoil", project_id=17)
+          return HttpResponse("创建项目成功")
+  ```
+
+###### 4、r（retrieve）
+
+- 获取一个数据表的所有记录
+  - 返回所有记录组成的模型对象集合（queryset查询集）
+- 获取指定记录
+  - get
+  - filter
+  - exclude
+
+###### 5、u（update）
+
+###### 6、d（delete）
 

@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+# from projects.views import index
 
 # from django_views.views import index
 # from django_views.views import HomeIndex
+from projects.views import IndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +31,5 @@ urlpatterns = [
 
     # 子路由的全局路由配置
     path('django_views/', include('django_views.urls')),
+    path('projects/', IndexView.as_view())
 ]

@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_views.apps.DjangoViewsConfig',  # 子应用django_views的全局配置文件设置
+    'projects.apps.ProjectsConfig',
+    'interfaces.apps.InterfacesConfig'
 ]
 
 MIDDLEWARE = [
