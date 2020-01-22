@@ -739,13 +739,88 @@ python manage.py startapp name
 ###### 4、r（retrieve）
 
 - 获取一个数据表的所有记录
+
   - 返回所有记录组成的模型对象集合（queryset查询集）
+
+  ```python
+  class IndexView(View):
+      def get(self, request):
+          # 查询操作
+          # #获取一张表中的所有记录
+          # #1、调用all()方法，返回QuerySet对象
+          # #2、QuerySet对象相当于一个高性能的列表（惰性加载）,QuerySet对象中存放的是模型类对象
+          # #3、支持列表的数字索引功能（返回的是一个模型类对象）、切片操作（返回的依然是一个QuerySet对象）、不支持负值查询
+          # #4、QuerySet对象.first()可以获取第一个元素，QuerySet对象.last()获取最后一个元素
+          # qs = Projects.objects.all()
+          # for i in qs:
+          #     print(i.name)
+          return HttpResponse("查询项目成功")
+  ```
+
+  
+
 - 获取指定记录
+
   - get
+
+  ```python
+  # 二、获取某个指定的记录，使用get()
+          # 1、如果没有查询到记录会报错，如果查询到多个记录也会报错，只有返回一条记录才不会报错
+          # 2、返回的是模型类对象
+          # 3、get方法最好使用主键或者唯一键去查询
+          qs = Projects.objects.get(id=1)
+  ```
+
   - filter
+
+  ```python
+  # 三、获取多条记录，使用filter()
+          qs = Projects.objects.filter(id=1)
+          qs = Projects.objects.filter(leader__contains="某人")  # 一条数据的某字段中包含xx内容
+          qs = Projects.objects.filter(name__in=["项目1", "项目2"])  # 查看分别在集合中对应的项目
+          return HttpResponse("查询项目成功")
+  ```
+
   - exclude
 
 ###### 5、u（update）
 
+- 查询模型类对象进行修改对应的数据性值
+
+  - 先获取需要更新的模型类对象
+  - 然后修改相关属性
+  - 对修改的属性进行保存
+  - 一般用在单条数据的修改更新
+
+  ```python
+  class IndexView(View):
+      def get(self, request):
+          one_project = Projects.objects.get(id=19)
+          one_project.leader = "龙的传人"
+          one_project.save()
+          return HttpResponse("修改项目成功")
+  ```
+
+- 先使用filter进行过滤，然后使用Upadate对数据进行更新
+
+  - 一般用在批量数据的修改更新
+
+  ```python
+  class IndexView(View):
+      def get(self, request):
+      	Projects.objects.filter(id=16).update(leader="可优院士")
+          return HttpResponse("修改项目成功")
+  ```
+
 ###### 6、d（delete）
 
+- 使用delete方法删除已查询的对象
+
+  ```python
+  class IndexView(View):
+      def get(self, request):
+      	Projects.objects.filter(id=16).update(leader="可优院士")
+          return HttpResponse("修改项目成功")
+  ```
+
+  
