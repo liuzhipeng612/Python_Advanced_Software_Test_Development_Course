@@ -213,7 +213,7 @@
 
   ```python
   MIDDLEWARE = [
-      # 'django.middleware.csrf.CsrfViewMiddleware',
+      # 'django1.middleware.csrf.CsrfViewMiddleware',
   ]
   ```
 
@@ -568,9 +568,9 @@ python manage.py startapp name
     ```python
     DATABASES = {
         'default': {
-            # 'ENGINE': 'django.db.backends.sqlite3', # Django默认的数据库为sqlite3
-            'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
-            'NAME': 'django',  # 数据库名
+            # 'ENGINE': 'django1.db.backends.sqlite3', # Django默认的数据库为sqlite3
+            'ENGINE': 'django1.db.backends.mysql',  # 数据库引擎
+            'NAME': 'django1',  # 数据库名
             'USER': 'root',  # 数据库用户名
             'PASSWORD': '123456',  # 数据库密码
             'HOST': 'localhost',  # 数据库主机域名或者IP

@@ -38,7 +38,7 @@ class TestTeam(models.Model):
         # 2) Quit, and let me add a default in models.py
         # Invalid input: name 't' is not defined
         # Please enter the default value now, as valid Python
-        # The datetime and django.utils.timezone modules are available, so you can do e.g. timezone.now
+        # The datetime and django1.utils.timezone modules are available, so you can do e.g. timezone.now
 
         db_table = "django_views_TestTeams"
         verbose_name = "测试团队"
