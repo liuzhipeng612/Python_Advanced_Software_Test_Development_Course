@@ -307,7 +307,6 @@ python manage.py startapp name
     ```
   
 - render函数的第一个参数为HttpRequest对象，第二个参数为静态文件模板，第三个参数locals()当前实例方法的本地变量
-  类方法
 
 ##### 6.路由表中添加路由信息
 
@@ -532,8 +531,7 @@ python manage.py startapp name
 
 ##### 2、定义Projects模型类
 
-- 什么是模型类？
-  - 怎么定义模型类
+- 采用ORM架构，在子应用Models.py中，定义一个model对象和数据库中表的映射，用来和数据交互的类可以称作为模型类。
 
 ### 五、ORM框架
 
