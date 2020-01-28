@@ -1,16 +1,16 @@
-### 目录
+# 目录
 
-##### 一、Django
+## 一、Django
 
-##### 1、简介
+### 1、简介
 
 - 为什么要使用框架来开发？
 
-##### 2、Django VS Flask
+### 2、Django VS Flask
 
-##### 3、Django是什么？
+### 3、Django是什么？
 
-##### 4、特点
+### 4、特点
 
 - 提供创建项目工程自动化工具
 - 数据库ORM支持
@@ -22,103 +22,103 @@
 - session机制
 - 缓存
 
-##### 二、创建工程
+## 二、创建工程
 
-##### 1、创建虚拟环境
+### 1、创建虚拟环境
 
-##### 2、安装Django
+### 2、安装Django
 
-##### 3、创建项目
+### 3、创建项目
 
-##### 4、运行项目
+### 4、运行项目
 
-##### 5、项目结构
+### 5、项目结构
 
-##### 6、修改默认时区
+### 6、修改默认时区
 
-##### 三、创建子应用
+### 三、创建子应用
 
-##### 1、定义
+### 1、定义
 
-##### 2、创建
+### 2、创建
 
-##### 3、注册
+### 3、注册
 
-##### 4、创建视图
+### 4、创建视图
 
-##### 5、添加路由
+### 5、添加路由
 
-##### 6、子应用结构
-
-
+### 6、子应用结构
 
 
 
 
 
-##### 五、路由
 
-###### 1、简介
 
-###### 2、主路由
+### 五、路由
 
-###### 3、子路由
+### 1、简介
 
-##### 六、视图
+### 2、主路由
 
-###### 1、定义
+### 3、子路由
 
-###### 2、分类
+### 六、视图
 
-##### 七、MVT模式和两种开发模式
+### 1、定义
 
-###### 1、介绍
+### 2、分类
 
-###### 2、两种开发模式
+### 七、MVT模式和两种开发模式
 
-##### 八、请求与响应
+### 1、介绍
 
-###### 1、请求参数类型
+### 2、两种开发模式
 
-###### 2、响应
+### 八、请求与响应
 
-##### 九、ORM框架
+### 1、请求参数类型
 
-###### 1、定义
+### 2、响应
 
-###### 2、步骤
+### 九、ORM框架
 
-###### 3、初探
+### 1、定义
 
-###### 4、数据库模型解析
+### 2、步骤
 
-###### 5、admin站点
+### 3、初探
 
-##### 十、数据库操作
+### 4、数据库模型解析
 
-###### 1、简介
+### 5、admin站点
 
-###### 2、演练数据库表相关操作
+### 十、数据库操作
 
-###### 3、c（Create）
+### 1、简介
 
-###### 4、r（retrieve）
+### 2、演练数据库表相关操作
 
-###### 5、u（update）
+### 3、c（Create）
 
-###### 6、d（delete）
+### 4、r（retrieve）
 
-### 一、搭建Django环境
+### 5、u（update）
 
-##### 1.安装Python环境
+### 6、d（delete）
+
+# 一、搭建Django环境
+
+## 1.安装Python环境
 
 - 使用Anaconda安装虚拟环境
 
-##### 2.安装Django环境
+## 2.安装Django环境
 
 - 使用Anconda在对应虚拟环境中安装Django
 
-##### 3.创建Django项目
+## 3.创建Django项目
 
 - 使用PyCharm专业版新建Django项目
 
@@ -138,7 +138,7 @@
     django-admin startproject django_framework .
     ```
 
-##### 4.Django项目结构介绍
+## 4.Django项目结构介绍
 
 - django_rest_framework项目名
 
@@ -158,7 +158,7 @@
 
 - manage.py是Django提供的命令行操作工具，开发阶段使用它来启动项目和数据库的迁移等等
 
-##### 5.运行Django项目
+## 5.运行Django项目
 
 - 使用PyCharm运行按钮运行Django项目
 
@@ -198,7 +198,7 @@
   - 直接关闭命令行窗口终止服务器
   - Terminal终端输入命令Ctrl+C终止服务器
 
-##### 6.修改Django环境配置
+## 6.修改Django环境配置
 
 - 设置语言和时区
 
@@ -217,9 +217,9 @@
   ]
   ```
 
-### 二、创建一个功能
+# 二、创建一个功能
 
-##### 1.创建子应用
+## 1.创建子应用
 
 - 有两种方法实现创建应用
 
@@ -231,13 +231,13 @@
 python manage.py startapp name
 ```
 
-##### 2.子应用意义
+## 2.子应用意义
 
 - 是Django最小的功能模块，会以应用的形式呈现
 - 方便重用
 - 结构更加清晰
 
-##### 3.子应用结构
+## 3.子应用结构
 
 - django_views/migrations存放数据库迁移的相关信息
 - django_views/__init__.py包的标志性文件init
@@ -247,7 +247,7 @@ python manage.py startapp name
 - django_views/tests.py存放当前应用的单元测试相关信息
 - django_views/views.py主要定义相关功能（业务逻辑）
 
-##### 4.全局配置文件中添加子应用信息
+## 4.全局配置文件中添加子应用信息
 
 - 在settings.py全局配置文件中的INSTALLED_APPS列表中添加app的信息
 
@@ -258,7 +258,7 @@ python manage.py startapp name
   ]
   ```
 
-##### 5.编写子应用相关功能
+## 5.编写子应用相关功能
 
 - 在django_views/views.py中创建相关功能（函数视图或者类视图）
 
@@ -308,7 +308,7 @@ python manage.py startapp name
   
 - render函数的第一个参数为HttpRequest对象，第二个参数为静态文件模板，第三个参数locals()当前实例方法的本地变量
 
-##### 6.路由表中添加路由信息
+## 6.路由表中添加路由信息
 
 -   全局路由和子路由的作用：
 
@@ -391,9 +391,9 @@ python manage.py startapp name
        - 在django_views/urls.py配置路由信息   #需导入子应用views.py模块的视图名称，from .views import HomeIndex 具体规则与全局路由一致
      - 在全局路由中添加子路由元素参数include
 
-### 三、MVT模式和两种开发模式
+# 三、MVT模式和两种开发模式
 
-##### 1、[MVT]()模式
+## 1、MVT模式
 
 ![image-20200109003056159](Django.assets/image-20200109003056159.png)
 
@@ -402,7 +402,7 @@ python manage.py startapp name
   - V全拼为View，与MVC中的C功能相同，接收请求，进行业务处理，返回响应
   - T全拼为Template，与MVC中的V功能相同，负责构造要返回的HTML页面
 
-##### 2、两种开发模式
+## 2、两种开发模式
 
 - 前后台不分离：后端控制数据的展示，前端与后端的耦合度很高，返回的是HTML页面，实用性、拓展性差，只能用于浏览器，其他终端不适配。
 - 前后端分离：后端仅返回前端所需要的数据，不再控制前端的展示效果。前端的展示效果全由前端负责，前后端完全独立，耦合度相对较低。
@@ -410,9 +410,9 @@ python manage.py startapp name
   - 适用性、拓展性非常好
   - 适合多终端运行同一套接口（PC、APP、小程序等）
 
-### 四、请求、响应和模式类定义
+# 四、请求、响应和模式类定义
 
-##### 1、请求参数类型
+## 1、请求参数类型
 
 - 前端向后端的传参方式
 
@@ -503,7 +503,7 @@ python manage.py startapp name
       request.META.get('HTTP_AOPSID')
       ```
 
-##### 2、响应
+## 2、响应
 
 - 视图中必须返回HttpResponse对象或者子对象
 
@@ -529,18 +529,18 @@ python manage.py startapp name
         return JsonResponse(data, safe=False)
     ```
 
-##### 2、定义Projects模型类
+## 3、定义Projects模型类
 
 - 采用ORM架构，在子应用Models.py中，定义一个model对象和数据库中表的映射，用来和数据交互的类可以称作为模型类。
 
-### 五、ORM框架
+# 五、ORM框架
 
-##### 1、定义
+## 1、定义
 
 - 把类和对象进行映射
 - 通过类和对象就能操作它所对应表格中的数据（CRUD）
 
-##### 2、步骤
+## 2、步骤
 
 - 配置数据库连接信息
   - 创建数据库和用户
@@ -627,59 +627,64 @@ python manage.py startapp name
     - 通过类和对象操作完成数据库增删改查操作
     
       - 导入数据
-  
-  3、初探
-  
-  ```python
-  self.name = name
-  self.verbose_name = verbose_name  # 属性名
-  self._verbose_name = verbose_name  # Store original for deconstruction
-  self.primary_key = primary_key	# 主键名
-  self.max_length, self._unique = max_length, unique # 最大长度
-  self.blank, self.null = blank, null # bank允许不传值，null允许该字段为空
-  self.remote_field = rel # 远程字段
-  self.is_relation = self.remote_field is not None # 是关系
-  self.default = default	# 默认
-  self.editable = editable # 可编辑的
-  self.serialize = serialize # 连载
-  self.unique_for_date = unique_for_date # 唯一的日期
-  self.unique_for_month = unique_for_month # 唯一的月份
-  self.unique_for_year = unique_for_year	#唯一的年份
-  if isinstance(choices, collections.abc.Iterator):
-  choices = list(choices)
-  self.choices = choices or []
-  self.help_text = help_text	# 描述文本
-  self.db_index = db_index # 表的索引
-  self.db_column = db_column # 表的列 
-  self._db_tablespace = db_tablespace	# 表的课哦克难攻坚
-  self.auto_created = auto_created # 自动创建
-  ```
-  
-  
-  
-  - 在projects/models.py中定义Model
-  - 迁移
-  - ORM的作用
-    - 以后不再写SQL语句
-      - 生成规范的SQL，可防止SQL注入
-  
-  ###### 4、数据库模型解析
-  
-  - 创建interfaces应用
-  
-  ###### 5、admin站点
-  
-  - 创建管理员用户
-    - python manage.py createsuperuser
 
-### 十、数据库操作
+## 3、初探
 
-###### 1、简介
+**数据库创建表时相关字段注释：**
+
+```python
+self.name = name
+self.verbose_name = verbose_name  # 属性名
+self._verbose_name = verbose_name  # Store original for deconstruction
+self.primary_key = primary_key	# 主键名
+self.max_length, self._unique = max_length, unique # 最大长度
+self.blank, self.null = blank, null # bank允许不传值，null允许该字段为空
+self.remote_field = rel # 远程字段
+self.is_relation = self.remote_field is not None # 是关系
+self.default = default	# 默认
+self.editable = editable # 可编辑的
+self.serialize = serialize # 连载
+self.unique_for_date = unique_for_date # 唯一的日期
+self.unique_for_month = unique_for_month # 唯一的月份
+self.unique_for_year = unique_for_year	#唯一的年份
+if isinstance(choices, collections.abc.Iterator):
+choices = list(choices)
+self.choices = choices or []
+self.help_text = help_text	# 描述文本
+self.db_index = db_index # 表的索引
+self.db_column = db_column # 表的列 
+self._db_tablespace = db_tablespace	# 表的课哦克难攻坚
+self.auto_created = auto_created # 自动创建
+```
+
+- 在projects/models.py中定义Model
+
+- 迁移
+
+- ORM的作用
+  
+  ![img](Django.assets/clip_image001.png)
+  
+  - 以后不再写SQL语句
+    - 生成规范的SQL，可防止SQL注入
+
+## 4、数据库模型解析
+
+- 创建interfaces应用
+
+## 5、admin站点
+
+- 创建管理员用户
+  - python manage.py createsuperuser
+
+# 十、数据库操作
+
+## 1、简介
 
 - Django提供了一套抽象的API，让我们对数据库表进行CRUD（create,retrivev,update and delete objects）操作
 - 简化对数据库的操作
 
-###### 2、演练数据库表相关操作
+## 2、演练数据库表相关操作
 
 - 可以使用Shell
 
@@ -704,7 +709,7 @@ python manage.py startapp name
 
   - 重启之后生效
 
-###### 3、c（Create）
+## 3、c（Create）
 
 *一个模型类相当于一个表（table）*
 
@@ -734,15 +739,15 @@ python manage.py startapp name
           return HttpResponse("创建项目成功")
   ```
 
-###### 4、r（retrieve）
+## 4、r（retrieve）
 
-- 获取一个数据表的所有记录
+- all()获取一个数据表的所有记录
 
   - 返回所有记录组成的模型对象集合（queryset查询集）
   - 获取一张表中的所有记录
     - 调用all()方法，返回QuerySet对象
     - QuerySet对象相当于一个高性能的列表（惰性加载）,QuerySet对象中存放的是模型类对象
-    - 支持列表的数字索引功能（返回的是一个模型类对象）、切片操作（返回的依然是一个QuerySet对象）、不支持负值查询
+    - 支持列表的数字索引功能（返回的是一个模型类对象）、切片操作（返回的依然是一个QuerySet对象）、不支持负值查询、链式操作
     - QuerySet对象.first()可以获取第一个元素，QuerySet对象.last()获取最后一个元素
 
   ```python
@@ -770,18 +775,87 @@ python manage.py startapp name
 
   - filter()获取多条记录
 
-  ```python
-  class IndexView(View):
-      def get(self, request):
-          qs = Projects.objects.filter(id=1)
-          qs = Projects.objects.filter(leader__contains="某人")  # 一条数据的某字段中包含xx内容
-          qs = Projects.objects.filter(name__in=["项目1", "项目2"])  # 查看分别在集合中对应的项目
-          return HttpResponse("查询项目成功")
-  ```
-
+      ```python
+      class IndexView(View):
+          def get(self, request):
+              qs = Projects.objects.filter(id=1)
+              qs = Projects.objects.filter(leader__contains="某人")  # 一条数据的某字段中包含xx内容
+              qs = Projects.objects.filter(name__in=["项目1", "项目2"])  # 查看分别在集合中对应的项目
+              return HttpResponse("查询项目成功")
+      ```
+  
+      - 过滤条件字段
+  
+          ```
+          name__contains	#包含关系
+          name__endswith	#以什么结束
+          name__exact
+          name__icontains	#忽略大小写的包含关系
+          name__iendswith	#忽略大小写的以什么结束
+          name__iexact
+          name__in		#成员关系
+          name__isnull	#是null的
+          name__istartswith	#忽略大小写的从什么开始
+          name__regex			#正则运算	name__regex=r'^(Django|项目)'
+          name__search		#搜索
+          name__startswith	#从什么开始
+          
+          id
+          id__exact
+          id__gt		#＞
+          id__gte		#≥
+          id__in
+          id__isnull
+          id__lt		#＜
+          id__lte		#≤
+          id__range
+          ```
+  
+  - 连表查询
+  
+      - 将多个条件在同一个filter中指定，为“与”的关系
+  
+          ```python
+          qs=Projects.objects.filter(name__contains="项目",id__gt=10)
+          ```
+  
+      - 一个QuerySet对象支持链式操作，可以同时调用多个filter
+  
+          ```python
+          qs = Projects.objects.filter(name__contains="项目").filter(id__gt=10)
+          ```
+  
+      -  或的关系需要时用Q变量
+  
+          ```python
+          qs = Projects.objects.filter(Q(name__contains="项目") | Q(id__gt=10))
+          ```
+  
+  - 多表关联查询
+  
+      ```
+      # 五、多表关联查询
+      # 使用从表的条件来查找父表的数据
+      # 使用从表模型类名小写__从表字段名__条件运算符
+      qs=Projects.objects.filter(interfaces__name__contains="注册")
+      
+      # 六、获取查询集对象的数量
+      # 使用查询集对象调用count()方法获取查询集中的数据条数
+      qs = Projects.objects.filter(name__contains="项目").count()
+      
+      # 七、排序操作
+      # 可以使用查询集对象调用order_by()方法来对查询集进行排序
+      # 默认是升序排列，如果需要降序排列，可以在字段名前加-
+      qs = Projects.objects.filter(name__contains="项目").order_by("-id")
+      ```
+  
+  - 获取查询集对象的数量
+  
+  - 排序操作
+  
   - exclude
 
-###### 5、u（update）
+## 5、u（update）
 
 - 查询模型类对象进行修改对应的数据性值
 
@@ -810,7 +884,7 @@ python manage.py startapp name
           return HttpResponse("修改项目成功")
   ```
 
-###### 6、d（delete）
+## 6、d（delete）
 
 - 使用delete方法删除已查询的对象
 
@@ -821,4 +895,115 @@ python manage.py startapp name
           return HttpResponse("修改项目成功")
   ```
 
-  
+# Django rest framework
+
+## 的
+
+优秀 接口URL设计
+
+```python
+# 获得多个项目
+GET https://www.keyou.site/v01/projects?page=2&size=8
+# 获得毛哥项目详情
+GET https://www.keyou.site/v01/projects/66
+# 创建项目
+POST https://www.keyou.site/v01/projects
+# 更新某个项目
+PUT https://www.keyou.site/v01/projects/66
+# 删除某个项目
+DELETE https://www.keyou.site/v01/projects/66
+```
+
+## 2、HTTP请求动词
+
+### 含义
+
+```python
+# 常见的HTTP动词有下面吗四个（括号里面是对应的SQL语句）
+GET(SELECT):从服务器获取资源（一项或者多项）
+POST(CREATE):在服务器新建一个资源
+PUT(UPDATE):在服务器更新资源（客户端提供改变后的完整资源）
+DELETE(DELETE):从服务器删除资源
+
+还有三种不常用的HTTP动词
+PATCH(UPDATE WHERE):在服务器部分更新资源（客户端提供改变的属性）
+HEAD:获取资源的元数据
+OPTIONS:获取关于资源的哪些属性是客户端可以改变的信息
+```
+
+
+
+URL中projects后面是有ID信息的一般指获取单个产品信息（单条数据）
+
+URL中projects后面跟随的是查询字符串的一般指获取所有产品信息（多条数据）
+
+### 例子
+
+```
+GET 	/projects					# 获取所有项目
+POST	/projects					# 创建一个新项目
+GET		/projects/6					# 获取ID为6的项目信息
+PUT		/projects/6					# 更新ID为6的项目信息（全部更新）
+PATCH	/projects/6					# 更新ID为6的项目信息（部分更新）
+DELETE	/projects/6					# 删除ID为6的项目
+
+GET		/projects/6/interfaces		# 获取ID为6的项目信息中所有的接口信息
+GET		/projects/6/interfaces/1	# 获取ID为6的项目信息中ID为1的接口信息
+```
+
+## 3、状态码
+
+### Status Codes
+
+```
+200	OK - [GET]：服务器成功返回用户请求的数据
+201	CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功
+204	NO CONTENT - [DELETE]：用户删除数据成功
+400 INVALID REQUEST - [POST/PUT/PATCH]：用户求情有无（请求参数有误）
+401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）
+403 Forbidden - [*]：表示用户得到的授权（与401错误相对），但是访问是被禁止的
+404 NOT FOUND - [*]：用户求情的路径不存在
+500 INTERNAL SERVER ERROR - [*]：服务器发生错误
+```
+
+## 4、返回结果
+
+### 服务器向用户返回的结果应该符合以下规范
+
+```python
+GET		/projects		# 返回所有项目的列表（json数组）
+GET		/projects/6		# 返回单个项目信息（单个json）
+POST 	/projects		# 返回新生成的项目信息（单个json）
+PUT 	/projects/6		# 返回更新之后，完整的项目信息（单个json）
+PATCH 	/projects/6		# 返回更新之后，完整的项目信息（单个json）
+DELETE 	/projects/6		# 返回空
+```
+
+
+
+## 5、错误处理
+
+### 当请求有误时，服务器需要将错误的信息以json格式数据的形式返回
+
+```json
+{
+	"detail":"身份认证信息未提供。"
+	"status_code":401
+}
+```
+
+## 6、Hypermedia API
+
+### 超链接API
+
+-   响应数据中，可以包含下一步操作相关的URL链接
+
+    ```
+    {
+    	"next":"https://www.baidu.com"
+    	"previous":"https://www.baidu.com"
+    }
+    ```
+
+    ## 三、基础阶段综合演练
+
