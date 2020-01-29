@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from projects.views import IndexView
+# from projects.views import IndexView
+from projects.views import ProjectList, ProjectEdit
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('index', index),
-    path('',IndexView.as_view())
+    # path('',IndexView.as_view()),
+    path('', ProjectList.as_view()),
+    path('<int:pk>/', ProjectEdit.as_view()),
 ]

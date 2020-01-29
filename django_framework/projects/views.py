@@ -1,3 +1,4 @@
+import json
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.views import View
@@ -6,81 +7,131 @@ from interfaces.models import Interfaces
 from projects.models import Projects
 
 
-class IndexView(View):
-    # # 创建操作
-    #
-    # # 方法一
-    # # 一个模型类相当于一个表（table）
-    # # 一个模型类对象相当于一条数据（record）
-    # def get(self, request):
-    #     one_project = Projects(name="国产大飞机", leader="xxx院士", tester="所见", programmer="龙的传人",
-    #                            publish_app="国产大飞机C919应用", desc="项目简介")
-    #     # 调用模型类对象save()才能执行sql语句
-    #     one_project.save()
-    #     # 方法二
-    #     one_project = Projects.objects.create(name="国产大飞机3", leader="xxx院士", tester="所见", programmer="龙的传人",
-    #                                           publish_app="国产大飞机C919应用", desc="项目简介")
-    #     Interfaces.objects.create(name="国产大飞机C919登录接口", tester="Addoil", project=one_project)
-    #     # Interfaces.objects.create(name="国产大飞机C919登录接口", tester="Addoil", project_id=17)
-    #     return HttpResponse("创建项目成功")
-    # def get(self, request):
-    #     # # 修改操作
-    #     # # 方法一
-    #     # # 先获取需要更新的模型类对象
-    #     # # 然后修改相关属性
-    #     # # 对修改的属性进行保存q
-    #     # one_project = Projects.objects.get(id=19)
-    #     # one_project.leader = "龙的传人"
-    #     # one_project.save()
-    #     # Projects.objects.filter(id=16).update(leader="可优院士")
-    #     return HttpResponse("修改项目成功")
-    # def delete(self, request):
-    #     # 删除操作
-    #     one_project = Projects.objects.get(id=19)
-    #     one_project.delete()
-    #     return HttpResponse("删除项目成功")
+class ProjectList(View):
     def get(self, request):
-        # 查询操作
+        # 1、从数据库中获取所有项目的信息
+        project_qs = Projects.objects.all()
+        # 2、将模型类对象转化为字典类型，构造嵌套字典的列表
+        project_list = []
+        for project in project_qs:
+            # one_list = {
+            #     "id": project.id,
+            #     "name": project.name,
+            #     "leader": project.leader,
+            #     "tester": project.tester,
+            #     "programmer": project.programmer,
+            #     "publish_app": project.publish_app,
+            #     "desc": project.desc
+            # }
+            # project_list.append(one_list)
+            project_list.append({
+                "id": project.id,
+                "name": project.name,
+                "leader": project.leader,
+                "tester": project.tester,
+                "programmer": project.programmer,
+                "publish_app": project.publish_app,
+                "desc": project.desc
+            })
+        return JsonResponse(data=project_list, safe=False)
 
-        # #一、获取一张表中的所有记录
-        # #1、调用all()方法，返回QuerySet对象
-        # #2、QuerySet对象相当于一个高性能的列表（惰性加载）,QuerySet对象中存放的是模型类对象
-        # #3、支持列表的数字索引功能（返回的是一个模型类对象）、切片操作（返回的依然是一个QuerySet对象）、不支持负值查询
-        # #4、QuerySet对象.first()可以获取第一个元素，QuerySet对象.last()获取最后一个元素
-        # qs = Projects.objects.all()
-        # for i in qs:
-        #     print(i.name)
+    def post(self, request):
+        project_list = []
+        # q1、前端要不要传参？肯定要
+        # q2、前端要以那种形式来传参？在请求体中以json形式来传参
+        # 1、接收参数（转化为Python中的基本类型）&校验数据
+        json_data = request.body  # 接收参数
+        python_data = json.loads(json_data, encoding="utf-8")  # 转化为Python中的基本类型
+        # 2、向数据库中新增项目
+        # 方法一
+        # project_name = python_data["name"]
+        # project_leader = python_data["leader"]
+        # project_tester = python_data["tester"]
+        # project_programmer = python_data["programmer"]
+        # project_publish_app = python_data["publish_app"]
+        # project_desc = python_data["desc"]
+        #
+        # one_project = Projects(name=project_name,
+        #                        leader=project_leader,
+        #                        tester=project_tester,
+        #                        programmer=project_programmer,
+        #                        publish_app=project_publish_app,
+        #                        desc=project_desc)
+        # one_project.save()
+        # 方法二
+        project = Projects.objects.create(**python_data)
+        # 3、返回结果（将新增项目的数据返回）(反序列化)
+        one_dict = {
+            "id": project.id,
+            "name": project.name,
+            "leader": project.leader,
+            "tester": project.tester,
+            "programmer": project.programmer,
+            "publish_app": project.publish_app,
+            "desc": project.desc
+        }
+        return JsonResponse(one_dict, status=201)
 
-        # # 二、获取某个指定的记录，使用get()
-        # # 1、如果没有查询到记录会报错，如果查询到多个记录也会报错，只有返回一条记录才不会报错
-        # # 2、返回的是模型类对象
-        # # 3、get方法最好使用主键或者唯一键去查询
-        # qs = Projects.objects.get(id=1)
 
-        # 三、获取多条记录，使用filter()
-        # qs=Projects.objects.filter(id=1)
-        # qs=Projects.objects.filter(leader__contains="某人")   #一条数据的某字段中包含xx内容
-        # qs = Projects.objects.filter(name__contains=["项目1", "项目2"])  # 查看分别在集合中对应的项目
+class ProjectEdit(View):
+    def get(self, request, pk):
+        # 获取指定项目信息
+        # 1、校验前端传递的pk（项目ID）值
+        # 2、获取指定pk值得项目
+        one_project = Projects.objects.get(id=pk)
+        print(type(one_project))
+        # 3、将模型类对象转换成字典（反序列化）
+        one_dict = {
+            "id": one_project.id,
+            "name": one_project.name,
+            "leader": one_project.leader,
+            "tester": one_project.tester,
+            "programmer": one_project.programmer,
+            "publish_app": one_project.publish_app,
+            "desc": one_project.desc
+        }
+        return JsonResponse(one_dict)
 
-        # 四、联表查询
-        # 将多个条件在同一个filter中指定，为“与”的关系
-        # qs=Projects.objects.filter(name__contains="项目",id__gt=10)
-        # 一个QuerySet对象支持链式操作，可以同时调用多个filter
-        # qs = Projects.objects.filter(name__contains="项目").filter(id__gt=10)
-        # 或的关系需要时用Q变量
-        # qs = Projects.objects.filter(Q(name__contains="项目") | Q(id__gt=10))
+    def put(self, request, pk):
+        # 更新指定的项目
+        # 1、校验前端传递的pk（项目ID）值
+        # 2、获取指定pk值得项目
+        one_project = Projects.objects.get(id=pk)
+        # q1、前端要不要传参？肯定要
+        # q2、前端要以那种形式来传参？在请求体中以json形式来传参
+        # 3、接收参数（转化为Python中的基本类型）&校验数据
+        json_data = request.body  # 接收参数
+        python_data = json.loads(json_data, encoding="utf-8")  # 转化为Python中的字典类型
+        # 4、向数据库中更新项目
+        one_project.name = python_data["name"]
+        one_project.leader = python_data["leader"]
+        one_project.tester = python_data["tester"]
+        one_project.programmer = python_data["programmer"]
+        one_project.publish_app = python_data["publish_app"]
+        one_project.desc = python_data["desc"]
+        one_project.save()
+        # 5、返回结果（将新增项目的数据返回）(反序列化)
+        one_dict = {
+            "id": one_project.id,
+            "name": one_project.name,
+            "leader": one_project.leader,
+            "tester": one_project.tester,
+            "programmer": one_project.programmer,
+            "publish_app": one_project.publish_app,
+            "desc": one_project.desc
+        }
+        return JsonResponse(one_dict, status=201)
 
-        # 五、多表关联查询
-        # 使用从表的条件来查找父表的数据
-        # 使用从表模型类名小写__从表字段名__条件运算符
-        # qs=Projects.objects.filter(interfaces__name__contains="注册")
+    def patch(self, request, pk):
+        project_list = []
+        return JsonResponse(data=project_list, safe=False)
 
-        # 六、获取查询集对象的数量
-        # 使用查询集对象调用count()方法获取查询集中的数据条数
-        # qs = Projects.objects.filter(name__contains="项目").count()
-
-        # 七、排序操作
-        # 可以使用查询集对象调用order_by()方法来对查询集进行排序
-        # 默认是升序排列，如果需要降序排列，可以在字段名前加-
-        qs = Projects.objects.filter(name__contains="项目").order_by("-id")
-        return HttpResponse("查询项目成功")
+    def delete(self, request, pk):
+        # 删除指定的数据
+        # 1、校验前端传递的pk（项目ID）值
+        # 2、获取指定pk值得项目
+        one_project = Projects.objects.get(id=pk)
+        # 3、删除项目
+        one_project.delete()
+        # 4、返回结果（将新增项目的数据返回）
+        return JsonResponse(None, safe=False, status=204)

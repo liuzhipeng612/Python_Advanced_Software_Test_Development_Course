@@ -36,7 +36,7 @@
 
 ### 6、修改默认时区
 
-### 三、创建子应用
+## 三、创建子应用
 
 ### 1、定义
 
@@ -56,7 +56,7 @@
 
 
 
-### 五、路由
+## 五、路由
 
 ### 1、简介
 
@@ -64,25 +64,25 @@
 
 ### 3、子路由
 
-### 六、视图
+## 六、视图
 
 ### 1、定义
 
 ### 2、分类
 
-### 七、MVT模式和两种开发模式
+## 七、MVT模式和两种开发模式
 
 ### 1、介绍
 
 ### 2、两种开发模式
 
-### 八、请求与响应
+## 八、请求与响应
 
 ### 1、请求参数类型
 
 ### 2、响应
 
-### 九、ORM框架
+## 九、ORM框架
 
 ### 1、定义
 
@@ -94,7 +94,7 @@
 
 ### 5、admin站点
 
-### 十、数据库操作
+## 十、数据库操作
 
 ### 1、简介
 
@@ -895,115 +895,5 @@ self.auto_created = auto_created # 自动创建
           return HttpResponse("修改项目成功")
   ```
 
-# Django rest framework
 
-## 的
-
-优秀 接口URL设计
-
-```python
-# 获得多个项目
-GET https://www.keyou.site/v01/projects?page=2&size=8
-# 获得毛哥项目详情
-GET https://www.keyou.site/v01/projects/66
-# 创建项目
-POST https://www.keyou.site/v01/projects
-# 更新某个项目
-PUT https://www.keyou.site/v01/projects/66
-# 删除某个项目
-DELETE https://www.keyou.site/v01/projects/66
-```
-
-## 2、HTTP请求动词
-
-### 含义
-
-```python
-# 常见的HTTP动词有下面吗四个（括号里面是对应的SQL语句）
-GET(SELECT):从服务器获取资源（一项或者多项）
-POST(CREATE):在服务器新建一个资源
-PUT(UPDATE):在服务器更新资源（客户端提供改变后的完整资源）
-DELETE(DELETE):从服务器删除资源
-
-还有三种不常用的HTTP动词
-PATCH(UPDATE WHERE):在服务器部分更新资源（客户端提供改变的属性）
-HEAD:获取资源的元数据
-OPTIONS:获取关于资源的哪些属性是客户端可以改变的信息
-```
-
-
-
-URL中projects后面是有ID信息的一般指获取单个产品信息（单条数据）
-
-URL中projects后面跟随的是查询字符串的一般指获取所有产品信息（多条数据）
-
-### 例子
-
-```
-GET 	/projects					# 获取所有项目
-POST	/projects					# 创建一个新项目
-GET		/projects/6					# 获取ID为6的项目信息
-PUT		/projects/6					# 更新ID为6的项目信息（全部更新）
-PATCH	/projects/6					# 更新ID为6的项目信息（部分更新）
-DELETE	/projects/6					# 删除ID为6的项目
-
-GET		/projects/6/interfaces		# 获取ID为6的项目信息中所有的接口信息
-GET		/projects/6/interfaces/1	# 获取ID为6的项目信息中ID为1的接口信息
-```
-
-## 3、状态码
-
-### Status Codes
-
-```
-200	OK - [GET]：服务器成功返回用户请求的数据
-201	CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功
-204	NO CONTENT - [DELETE]：用户删除数据成功
-400 INVALID REQUEST - [POST/PUT/PATCH]：用户求情有无（请求参数有误）
-401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）
-403 Forbidden - [*]：表示用户得到的授权（与401错误相对），但是访问是被禁止的
-404 NOT FOUND - [*]：用户求情的路径不存在
-500 INTERNAL SERVER ERROR - [*]：服务器发生错误
-```
-
-## 4、返回结果
-
-### 服务器向用户返回的结果应该符合以下规范
-
-```python
-GET		/projects		# 返回所有项目的列表（json数组）
-GET		/projects/6		# 返回单个项目信息（单个json）
-POST 	/projects		# 返回新生成的项目信息（单个json）
-PUT 	/projects/6		# 返回更新之后，完整的项目信息（单个json）
-PATCH 	/projects/6		# 返回更新之后，完整的项目信息（单个json）
-DELETE 	/projects/6		# 返回空
-```
-
-
-
-## 5、错误处理
-
-### 当请求有误时，服务器需要将错误的信息以json格式数据的形式返回
-
-```json
-{
-	"detail":"身份认证信息未提供。"
-	"status_code":401
-}
-```
-
-## 6、Hypermedia API
-
-### 超链接API
-
--   响应数据中，可以包含下一步操作相关的URL链接
-
-    ```
-    {
-    	"next":"https://www.baidu.com"
-    	"previous":"https://www.baidu.com"
-    }
-    ```
-
-    ## 三、基础阶段综合演练
 
