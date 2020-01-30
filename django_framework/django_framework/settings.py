@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'projects.apps.ProjectsConfig',
     'homeworks.apps.HomeworksConfig',
     'interfaces.apps.InterfacesConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

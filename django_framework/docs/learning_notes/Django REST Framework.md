@@ -233,11 +233,53 @@ DELETE 	/projects/6		# 返回空
 ### 2、创建接口的任务
 
 -   校验用户数据
+
+    ```
+    # 方案一
+    # 如果pk值存在，返回对应pk值得项目
+    # 如果pk值不存在，返回{"msg": "项目ID不存在"}的json格式数据
+    # 调用get_object()方法是，需要判断one_project是否为JsonResponse对象，即异常的JsonResponse对象，如果是直接返回one_project,
+    # def get_object(self, pk):
+    #     try:
+    #         one_project = Projects.objects.get(id=pk)
+    #     except Projects.DoesNotExist:
+    #         return JsonResponse({"msg": "项目ID不存在"}, status=400)
+    #     return one_project
+    # 方案二
+    def get_object(self, pk):
+        try:
+            return Projects.objects.get(id=pk)
+        except Projects.DoesNotExist:
+            raise Http404
+    
+    def get(self, request, pk):
+        # 获取指定项目信息
+        # 1、校验前端传递的pk（项目ID）值
+        # 2、获取指定pk值得项目
+        one_project = self.get_object(pk)
+        # 方案一
+        # if isinstance(one_project, JsonResponse):
+        #     return one_project
+        # 3、将模型类对象转换成字典（反序列化）
+        one_dict = {
+            "id": one_project.id,
+            "name": one_project.name,
+            "leader": one_project.leader,
+            "tester": one_project.tester,
+            "programmer": one_project.programmer,
+            "publish_app": one_project.publish_app,
+            "desc": one_project.desc
+        }
+        return JsonResponse(one_dict)
+    ```
+
 -   将请求的数据（如json格式）转换成模型类队形
     -   反序列化
         -   将其他格式（json、xml等）转换为程序中的数据类型
         -   将json格式的字符串转换成Django中的模型类队形
+    
 -   操作数据库
+
 -   将模型类对象转换为响应的数据（如json格式）
     -   序列化
         -   将程序中的数据类型转换为其他格式（json、xml等）
@@ -283,20 +325,39 @@ DELETE 	/projects/6		# 返回空
 
 ### 3、安装和配置
 
--   安装
+-   使用 安装 ，包括所需的任何可选软件包...`pip`
 
     ```
     pip install djangorestframework
-    pip install markdown # Markdown support for the browsable API.
+    pip install markdown       # Markdown support for the browsable API.
+    pip install django-filter  # Filtering support
     ```
 
--   配置
+-   ...或从 github 克隆项目。
 
     ```
-    INSTALLED_APPS=[
-    	'REST_FRAMEWORK',
+    git clone https://github.com/encode/django-rest-framework
+    ```
+
+-   添加到您的设置。`'rest_framework'``INSTALLED_APPS`
+
+    ```
+    INSTALLED_APPS = [
+        ...
+        'rest_framework',
     ]
     ```
+
+-   如果您打算使用可浏览 API，您可能还需要添加 REST 框架的登录视图和注销视图。将以下内容添加到根文件中。`urls.py`
+
+    ```
+    urlpatterns = [
+        ...
+        url(r'^api-auth/', include('rest_framework.urls'))
+    ]
+    ```
+
+    请注意，URL 路径可以是所需的任何内容。
 
 ### 4、初探
 
