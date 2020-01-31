@@ -470,11 +470,42 @@ class ProjectSerializer(serializers.Serializer):
 
 ### 7、反序列化
 
+-   演示反系列化操作
+
+-   数据校验
+
+    -   在系列化器字段定时，通过validators选项添加校验器
+
+    -   单字段校验和多字段校验
+
+    -   序列化器字段校验顺序
+
+        ```
+        字段定义时的限制（包含validators列表条目从左到右进行校验）->通过后才会开始对单字段进行检验（validate_name）->对多字段进行校验validate方法
+        ```
+
+    -   保存或更新数据库模型
+
 ### 8、ModelSerializer
+
+-   为了简化序列化器类的定义
+-   功能
+    -   基于模型类自动生成一系列字段
+    -   基于模型类自动为Serializer生成validators，比如unique_together
+    -   包含默认的create()和update()的实现
 
 ### 9、关联字段序列化
 
+-   PrimaryKeyRelatedField
+-   StringRelatedField
+-   SlugRelatedField
+-   关联对象的系列化器
+
 ### 10、痛点
+
+-   仅支持json格式传参，不支持form表单传参
+-   仅能返回json格式的数据，其他类型不支持
+-   对于模型类的获取仍然有冗余
 
 ### 11、Request
 

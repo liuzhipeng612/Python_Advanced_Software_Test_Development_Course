@@ -18,7 +18,7 @@ class ProjectList(View):
         # 1、从数据库中获取所有项目的信息
         project_qs = Projects.objects.all()
         # 2、将模型类对象转化为字典类型，构造嵌套字典的列表-反序列化
-        serializer = serializers.ProjectModelSerializer(instance=project_qs, many=True)
+        serializer = serializers.ProjectSerializer(instance=project_qs, many=True)
         return JsonResponse(data=serializer.data, safe=False)
 
     def post(self, request):
@@ -31,7 +31,7 @@ class ProjectList(View):
         json_data = request.body  # 接收参数
         python_data = json.loads(json_data, encoding="utf-8")  # 转化为Python中的基本类型
         # 校验数据
-        serializer = serializers.ProjectModelSerializer(data=python_data)
+        serializer = serializers.ProjectSerializer(data=python_data)
         try:
             serializer.is_valid(raise_exception=True)
         except Exception:
@@ -46,7 +46,7 @@ class ProjectList(View):
         # serializer.save（username="小黑"，age=18）
         project = serializer.save()
         # 3、返回结果（将新增项目的数据返回）(反序列化)
-        serializer = serializers.ProjectModelSerializer(instance=project)
+        serializer = serializers.ProjectSerializer(instance=project)
         return JsonResponse(serializer.data, status=201)
 
 
@@ -68,7 +68,7 @@ class ProjectDetail(View):
         # 2、获取指定pk值得项目
         one_project = self.get_object(pk)
         # 3. 进行序列化操作
-        serializer = serializers.ProjectModelSerializer(instance=one_project)
+        serializer = serializers.ProjectSerializer(instance=one_project)
         return JsonResponse(serializer.data)
 
     def put(self, request, pk):
@@ -85,7 +85,7 @@ class ProjectDetail(View):
         json_data = request.body  # 接收参数
         python_data = json.loads(json_data, encoding="utf-8")  # 转化为Python中的字典类型
         # 校验数据
-        serializer = serializers.ProjectModelSerializer(instance=one_project, data=python_data)
+        serializer = serializers.ProjectSerializer(instance=one_project, data=python_data)
         try:
             serializer.is_valid(raise_exception=True)
         except Exception:

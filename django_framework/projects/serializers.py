@@ -103,3 +103,42 @@ class ProjectSerializer(serializers.Serializer):
         instance.desc = validated_data['desc']
         instance.save()
         return instance
+
+
+class ProjectModelSerializer(serializers.ModelSerializer):
+    # 7. 显示创建序列化器字段
+    # 定义与模型类中相同的字段名, 会覆盖模型序列化器自动生成的字段定义
+    # name = serializers.CharField(label='项目名称', max_length=20, help_text='项目名称',
+    #                              validators=[is_unique_project_name, cotain_keyword_project_name])
+
+    # email = serializers.EmailField(label='邮箱', allow_blank=True, allow_null=True, default="keyou100@qq.com",
+    # read_only=True)
+    # 定义Meta内部类, 用于设置当前序列化器类的元数据信息
+    class Meta:
+        # 1. 指定参照哪一个模型
+        model = Projects
+        # 2. 指定为模型类的哪些字段来生成序列化器字段
+        # 3. __all__包含所有的字段
+        # 4. 会将模型类中的主键添加read_only=True
+        fields = '__all__'
+        # 5. 可以使用元祖指定具体哪些模型类字段需要生成序列化器字段\
+        # fields元祖中指定的是, 所有序列化器字段(哪怕模型类中不包含的字段, 也需要在fields中指定)
+        # fields = ('id', 'name', 'leader', 'tester', 'email')
+        # exclude = ('create_time', 'update_time', 'desc')
+        # 6. 指定read_only为True的字段
+        # read_only_fields = ('desc', '')
+
+        # 8. extra_kwargs是一个嵌套字典的字典
+        #
+        extra_kwargs = {
+            'name': {
+                'error_messages': {'max_length': '项目名称的长度不能操作200个字节!'},
+                'read_only': True,
+                'min_length': 50,
+                'validators': [is_unique_project_name, cotain_keyword_project_name]
+            },
+            'leader': {
+                'label': '负责人',
+                'write_only': True
+            }
+        }
