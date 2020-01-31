@@ -10,6 +10,11 @@ from . import serializers
 
 class ProjectList(View):
     def get(self, request):
+        """
+
+        :param request:
+        :return:
+        """
         # 1、从数据库中获取所有项目的信息
         project_qs = Projects.objects.all()
         # 2、将模型类对象转化为字典类型，构造嵌套字典的列表-反序列化
