@@ -80,7 +80,11 @@ class ProjectSerializer(serializers.Serializer):
         return attrs
 
     def create(self, validated_data):
-        """"""
+        """
+        创建项目
+        :param validated_data: 校验通过之后的项目数据
+        :return: 项目创建成功之后的模型类对象
+        """
         project = Projects.objects.create(**validated_data)
         return project
 

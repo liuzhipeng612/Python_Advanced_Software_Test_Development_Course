@@ -10,6 +10,11 @@ from . import serializers
 
 class ProjectList(View):
     def get(self, request):
+        """
+
+        :param request:
+        :return:
+        """
         # 1、从数据库中获取所有项目的信息
         project_qs = Projects.objects.all()
         # 2、将模型类对象转化为字典类型，构造嵌套字典的列表-反序列化
@@ -55,7 +60,10 @@ class ProjectDetail(View):
     def get(self, request, pk):
         """
         获取指定项目信息
-        """
+        :param request: 
+        :param pk: 
+        :return: 
+        """""
         # 1、校验前端传递的pk（项目ID）值
         # 2、获取指定pk值得项目
         one_project = self.get_object(pk)
@@ -66,6 +74,9 @@ class ProjectDetail(View):
     def put(self, request, pk):
         """
         更新指定的项目
+        :param request:
+        :param pk:
+        :return:
         """
         # 1、校验前端传递的pk（项目ID）值
         # 2、获取指定pk值得项目
@@ -74,7 +85,7 @@ class ProjectDetail(View):
         json_data = request.body  # 接收参数
         python_data = json.loads(json_data, encoding="utf-8")  # 转化为Python中的字典类型
         # 校验数据
-        serializer = serializers.ProjectSerializer(data=python_data)
+        serializer = serializers.ProjectSerializer(instance=one_project, data=python_data)
         try:
             serializer.is_valid(raise_exception=True)
         except Exception:
@@ -82,10 +93,9 @@ class ProjectDetail(View):
         # 4、向数据库中更新项目
         # a. 在创建序列化器对象时, 给instance和data同时传递参数
         # b. 调用save()时, 会自动化调用update()方法
-        python_data = serializer.validated_data
+        serializer.save()
 
         # 5、返回结果（将新增项目的数据序列化返回）
-        serializer = serializers.ProjectSerializer(instance=project)
         return JsonResponse(serializer.data, status=201)
 
     def patch(self, request, pk):
@@ -95,6 +105,9 @@ class ProjectDetail(View):
     def delete(self, request, pk):
         """
         删除指定的数据
+        :param request:
+        :param pk:
+        :return:
         """
         # 1、校验前端传递的pk（项目ID）值
         # 2、获取指定pk值得项目
