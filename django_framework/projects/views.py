@@ -17,6 +17,11 @@ class ProjectList(View):
         return JsonResponse(data=serializer.data, safe=False)
 
     def post(self, request):
+        """
+
+        :param request:
+        :return:
+        """
         # 1、接收参数（转化为Python中的基本类型）&校验数据
         json_data = request.body  # 接收参数
         python_data = json.loads(json_data, encoding="utf-8")  # 转化为Python中的基本类型
