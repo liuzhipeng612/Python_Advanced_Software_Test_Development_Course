@@ -365,7 +365,108 @@ DELETE 	/projects/6		# 返回空
 
 ### 5、序列化器
 
+-   数据校验
+    -   判断用户输入的数据是否异常
+-   数据转换
+    -   反序列化
+        -   数据格式（json、xml、text）=>程序中的数据类型
+    -   序列化
+        -   程序中的数据类型=>数据格式（前端能处理的数据，如json）
+
 ### 6、序列化
+
+-   定义序列化器
+
+    **projects/serializers.py**
+
+```
+from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
+
+from .models import Projects
+
+
+# def is_unique_project_name(value):
+#     """
+#     创建自定义校验器
+#     :param value: 待校验的项目名称
+#     :return:
+#     """
+#     qs = Projects.objects.filter(name=value)
+#     if qs:  # 如果查询集不为空, 那么说明当前项目名已经存在
+#         raise serializers.ValidationError("项目名不能重复!")
+#
+#
+# def cotain_keyword_project_name(value):
+#     """
+#     创建自定义校验器
+#     校验项目与名称中是否包含"项目"
+#     :param value:
+#     :return:
+#     """
+#     if "项目" not in value:
+#         raise serializers.ValidationError("项目名称中不包含'项目'!")
+
+
+class ProjectSerializer(serializers.Serializer):
+    """创建项目序列化器
+    序列化器的作用:
+    a. 序列化操作
+    b. 反序列化操作
+    """
+    # 1. 定义的序列化器类, 需要继承Serializer或者Serializer子类
+    # 2. 定义的每一个类属性要与模型类中对应
+    # 3. label、help_text选项相当于verbose_name, help_text
+    # 4. 默认情况下, 定义了哪些类属性(序列化器字段), 那么就会序列化输出哪些字段和哪些字段需要进行反序列化输入
+    # a. 如果不需要序列化输出, 不定义即可
+    # b. 如果在定义的字段中, 添加write_only选项为True, 那么当前字段只能进行反序列化(数据校验), 不进行序列化输出
+    # c. 如果在定义的字段中, 添加read_only选项为True, 那么当前字段只能进行序列化输出, 而不进行反序列化输入(数据校验)
+    # id = serializers.IntegerField(label='ID', read_only=True)
+    id = serializers.IntegerField(label='ID', write_only=True)
+    # d. 通过制定validators选项, 使用内置的校验器(UniqueValidator)来校验, 为一个列表
+    # e. validators列表中的校验器校验顺序是按照列表的元素顺序, 并且会遍历调用每一个校验器(不管校验成功还是失败, 都会去做校验)
+    # name = serializers.CharField(label='项目名称', max_length=200, help_text='项目名称',
+    # validators=[UniqueValidator(queryset=Projects.objects.all(), message="项目名不能重复"), is_unique_project_name])
+
+    name = serializers.CharField(label='项目名称', max_length=20, help_text='项目名称')
+    # validators=[is_unique_project_name, cotain_keyword_project_name])
+
+    leader = serializers.CharField(label='负责人', max_length=50, help_text='负责人')
+    tester = serializers.CharField(label='测试人员', max_length=50, help_text='测试人员')
+    programmer = serializers.CharField(label='开发人员', max_length=50, help_text='开发人员')
+    publish_app = serializers.CharField(label='发布应用', max_length=50, help_text='发布应用')
+    desc = serializers.CharField(label='简要描述', allow_null=True, allow_blank=True, default='', help_text='简要描述')
+
+    # def validate_name(self):
+    #     pass
+```
+
+-   选项参数
+
+    | 参数名称        | 作用             |
+    | --------------- | ---------------- |
+    | max_length      | 最大长度         |
+    | min_length      | 最小长度         |
+    | allow_blank     | 是否允许为空     |
+    | trim_whitespace | 是否截断空白字符 |
+    | max_value       | 最小值           |
+    | min_value       | 最大值           |
+
+-   通用参数
+
+    | 参数名称       | 说明                                        |
+    | -------------- | ------------------------------------------- |
+    | read_only      | 表明该字段仅用于序列化输出，默认False       |
+    | write_only     | 表明该字段仅用于反序列化输入，默认False     |
+    | required       | 表明该字段在发序列化时必须输入，默认True    |
+    | default        | 反序列化时使用的默认值                      |
+    | allow_null     | 表明该字段是否允许传入None，默认False       |
+    | validators     | 该字段使用的验证器                          |
+    | error_messages | 包含错误的编码与错误信息的字典              |
+    | label          | 用于HTML展示API页面时，显示字段名称         |
+    | help_text      | 用于HTML展示API页面时，显示字段帮助提示信息 |
+
+-   演示序列化操作
 
 ### 7、反序列化
 

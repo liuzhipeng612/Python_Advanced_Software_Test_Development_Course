@@ -45,8 +45,17 @@ class ProjectList(View):
         json_data = request.body  # 接收参数
         python_data = json.loads(json_data, encoding="utf-8")  # 转化为Python中的基本类型
         # 校验数据
+        # a、要进行反序列化输入（数据校验），需要给data传Python中的数据类型（字典）参数
+        # b、只有通序列化器对象调用is_valid()方法，才可以进行数据校验
+        # c、只有通过序列化器对象调用is_valid()方法之后，才能调用errors属性来获取校验失败信息
         serializer = serializers.ProjectSerializer(data=python_data)
-        serializer.is_valid()
+        # if not serializer.is_valid():
+        #     return JsonResponse(serializer.errors,status=400)
+        # d、is_valid()方法中，raise_exception设置为True，那么校验失败后，会自动抛出异常，异常信息会被自动处理
+        try:
+            serializer.is_valid(raise_exception=True)
+        except Exception:
+            return JsonResponse(serializer.errors, status=400)
         # 2、向数据库中新增项目
         # 方法一
         # project_name = python_data["name"]
@@ -64,7 +73,7 @@ class ProjectList(View):
         #                        desc=project_desc)
         # one_project.save()
         # 方法二
-        project = Projects.objects.create(**python_data)
+        project = Projects.objects.create(**serializer.validated_data)
         # 3、返回结果（将新增项目的数据返回）(反序列化)
         # one_dict = {
         #     "id": project.id,
