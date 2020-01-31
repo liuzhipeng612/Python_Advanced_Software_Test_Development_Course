@@ -78,3 +78,24 @@ class ProjectSerializer(serializers.Serializer):
         if "淡水" not in name and "淡水" not in leader:
             raise serializers.ValidationError("淡水必须是项目负责人或者项目名称中包含淡水")
         return attrs
+
+    def create(self, validated_data):
+        """"""
+        project = Projects.objects.create(**validated_data)
+        return project
+
+    def update(self, instance, validated_data):
+        """
+        更新项目
+        :param instance: 待更新的项目模型类对象
+        :param validated_data: 校验通过之后的项目数据
+        :return: 项目更新成功之后的模型类对象
+        """
+        instance.name = validated_data['name']
+        instance.leader = validated_data['leader']
+        instance.tester = validated_data['tester']
+        instance.programmer = validated_data['programmer']
+        instance.publish_app = validated_data['publish_app']
+        instance.desc = validated_data['desc']
+        instance.save()
+        return instance
