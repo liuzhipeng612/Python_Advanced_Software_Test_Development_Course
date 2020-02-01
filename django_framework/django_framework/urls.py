@@ -15,13 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from homeworks.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('homeworks/',index),
-    # path('homeworks/',IndexView.as_view())
-    path('homeworks/', include('homeworks.urls')),
-    path('projects/', include('projects.urls')),
-    path('interfaces/', include('interfaces.urls')),
+    path('projects/', include('projects.urls')),  # 将路径为projects的全部指向interfaces子路由
+    path('interfaces/', include('interfaces.urls')),  # 将路径为interfaces的全部指向interfaces子路由
 ]
