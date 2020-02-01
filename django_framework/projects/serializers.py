@@ -121,7 +121,7 @@ class ProjectModelSerializer(serializers.ModelSerializer):
         # 3. __all__包含所有的字段
         # 4. 会将模型类中的主键添加read_only=True
         fields = '__all__'
-        # 5. 可以使用元祖指定具体哪些模型类字段需要生成序列化器字段\
+        # 5. 可以使用元祖指定具体哪些模型类字段需要生成序列化器字段
         # fields元祖中指定的是, 所有序列化器字段(哪怕模型类中不包含的字段, 也需要在fields中指定)
         # fields = ('id', 'name', 'leader', 'tester', 'email')
         # exclude = ('create_time', 'update_time', 'desc')
