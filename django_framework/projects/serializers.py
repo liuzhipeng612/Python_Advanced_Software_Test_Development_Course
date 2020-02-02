@@ -112,9 +112,12 @@ class ProjectModelSerializer(serializers.ModelSerializer):
     #                              validators=[is_unique_project_name, cotain_keyword_project_name])
 
     # email = serializers.EmailField(label='邮箱', allow_blank=True, allow_null=True, default="keyou100@qq.com",
-    # read_only=True)
+    #                                read_only=True)
     # 定义Meta内部类, 用于设置当前序列化器类的元数据信息
-    interfaces_set = serializers.StringRelatedField(many=True)
+    # 默认情况下，父表模型序列化器类不会创建子表字段，需要显示创建
+    # 子表字段名为：子表类名小写_set
+    # 如果子表定义外键字段是，指定了related_name='interfaces',那么这里需要使用relate_name指定的值，或者删除模型类中related_name该字段
+    interfaces = serializers.StringRelatedField(many=True)
 
     class Meta:
         # 1. 指定参照哪一个模型
@@ -125,7 +128,7 @@ class ProjectModelSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         # 5. 可以使用元祖指定具体哪些模型类字段需要生成序列化器字段
         # fields元祖中指定的是, 所有序列化器字段(哪怕模型类中不包含的字段, 也需要在fields中指定)
-        fields = ('id', 'name', 'leader', 'tester', 'email', 'interfaces_set')
+        fields = ('id', 'name', 'leader', 'tester', 'interfaces')
         # exclude = ('create_time', 'update_time', 'desc')
         # 6. 指定read_only为True的字段
         # read_only_fields = ('desc', '')
