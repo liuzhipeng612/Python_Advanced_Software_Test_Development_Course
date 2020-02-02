@@ -114,16 +114,18 @@ class ProjectModelSerializer(serializers.ModelSerializer):
     # email = serializers.EmailField(label='邮箱', allow_blank=True, allow_null=True, default="keyou100@qq.com",
     # read_only=True)
     # 定义Meta内部类, 用于设置当前序列化器类的元数据信息
+    interfaces_set = serializers.StringRelatedField(many=True)
+
     class Meta:
         # 1. 指定参照哪一个模型
         model = Projects
         # 2. 指定为模型类的哪些字段来生成序列化器字段
         # 3. __all__包含所有的字段
         # 4. 会将模型类中的主键添加read_only=True
-        fields = '__all__'
+        # fields = '__all__'
         # 5. 可以使用元祖指定具体哪些模型类字段需要生成序列化器字段
         # fields元祖中指定的是, 所有序列化器字段(哪怕模型类中不包含的字段, 也需要在fields中指定)
-        # fields = ('id', 'name', 'leader', 'tester', 'email')
+        fields = ('id', 'name', 'leader', 'tester', 'email', 'interfaces_set')
         # exclude = ('create_time', 'update_time', 'desc')
         # 6. 指定read_only为True的字段
         # read_only_fields = ('desc', '')

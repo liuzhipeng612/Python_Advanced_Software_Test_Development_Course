@@ -493,6 +493,7 @@ class ProjectSerializer(serializers.Serializer):
     -   基于模型类自动生成一系列字段
     -   基于模型类自动为Serializer生成validators，比如unique_together
     -   包含默认的create()和update()的实现
+        -   create()和update()的基础功能不需要serializers.py模块中重新定义，views.py中调用serializer.save()时默认会调用ModelSerizlizer自带的create()和update()
 
 ### 9、关联字段序列化
 
@@ -509,7 +510,24 @@ class ProjectSerializer(serializers.Serializer):
 
 ### 11、Request
 
+-   对Django中的HttpRequest进行了拓展
+    -   会根据请求头中的Content-Type自动进行解析
+    -   无论前端发送的是哪种格式的数据，都可以以相同的方式读取
+-   request.data
+    -   类似于Django中的request.POST和request.FILES
+    -   可以对POST、PUT、PATCH的请求体参数进行解析
+    -   不仅支持form产餐，也支持json格式传参
+-   request.query_params
+    -   类似于Django中的request.GET
+    -   获取查询字符串参数
+-   支持Django HttpRequest中所有的对象和发你发
+
 ### 12、Response
+
+-   对Django中的HttpResponse进行了拓展
+    -   会根据请求头中的Accept自动转化响应数据对应的格式
+-   如果请求头中未设置Accept，则会自动采用默认方式处理响应数据（默认返回jason格式的数据）
+-   指定响应默认渲染类
 
 ## 五、类视图
 
