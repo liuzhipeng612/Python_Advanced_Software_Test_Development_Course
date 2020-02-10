@@ -2,13 +2,16 @@ import json
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse, Http404
 from django.views import View
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from interfaces.models import Interfaces
 from projects.models import Projects
 from . import serializers
 
 
-class ProjectList(View):
+class ProjectList(APIView):
     def get(self, request):
         """
 
@@ -19,7 +22,7 @@ class ProjectList(View):
         project_qs = Projects.objects.all()
         # 2、将模型类对象转化为字典类型，构造嵌套字典的列表-反序列化
         serializer = serializers.ProjectModelSerializer(instance=project_qs, many=True)
-        return JsonResponse(data=serializer.data, safe=False)
+        return Response(data=serializer.data)
 
     def post(self, request):
         """
@@ -28,14 +31,18 @@ class ProjectList(View):
         :return:
         """
         # 1、接收参数（转化为Python中的基本类型）&校验数据
-        json_data = request.body  # 接收参数
-        python_data = json.loads(json_data, encoding="utf-8")  # 转化为Python中的基本类型
+        # json_data = request.body  # 接收参数
+        # python_data = json.loads(json_data, encoding="utf-8")  # 转化为Python中的基本类型
         # 校验数据
-        serializer = serializers.ProjectModelSerializer(data=python_data)
+        # serializer = serializers.ProjectModelSerializer(data=python_data)
+        # 1.继承DRF框架中的APIView之后，request是DRF中的request对象
+        # 2.Response对HttpRequest进行了拓展，HttpRequest有的功能Response都支持
+        # 3.不管前端传json还是x-www-form菜蔬，统一使用request.data
+        serializer = serializers.ProjectModelSerializer(data=request.data)
         try:
             serializer.is_valid(raise_exception=True)
         except Exception:
-            return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         # 2、向数据库中新增项目
         # 可以通过序列化对象中的validated_data属性获取校验通过之后的数据
         # project = Projects.objects.create(**serializer.validated_data)
@@ -44,13 +51,12 @@ class ProjectList(View):
         # c.用于创建项目
         # d.save方法智能传递关键字参数，会被create中的validated_data接收
         # serializer.save（username="小黑"，age=18）
-        project = serializer.save()
+        serializer.save()
         # 3、返回结果（将新增项目的数据返回）(反序列化)
-        serializer = serializers.ProjectModelSerializer(instance=project)
-        return JsonResponse(serializer.data, status=201)
+        return Response(serializer.data, status=201)
 
 
-class ProjectDetail(View):
+class ProjectDetail(APIView):
     def get_object(self, pk):
         try:
             return Projects.objects.get(id=pk)
@@ -69,7 +75,9 @@ class ProjectDetail(View):
         one_project = self.get_object(pk)
         # 3. 进行序列化操作
         serializer = serializers.ProjectModelSerializer(instance=one_project)
-        return JsonResponse(serializer.data)
+        # 默认请求投中没有Accept，那么返回json
+        # 如果请求头中添加了Accept，那么会以Accept指定的格式返回
+        return Response(serializer.data)
 
     def put(self, request, pk):
         """
@@ -96,11 +104,11 @@ class ProjectDetail(View):
         serializer.save()
 
         # 5、返回结果（将新增项目的数据序列化返回）
-        return JsonResponse(serializer.data, status=201)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def patch(self, request, pk):
         project_list = []
-        return JsonResponse(data=project_list, safe=False)
+        return Response(data=project_list)
 
     def delete(self, request, pk):
         """
@@ -115,4 +123,4 @@ class ProjectDetail(View):
         # 3、删除项目
         one_project.delete()
         # 4、返回结果（将新增项目的数据返回）
-        return JsonResponse(None, safe=False, status=204)
+        return Response(None, status=status.HTTP_204_NO_CONTENT)

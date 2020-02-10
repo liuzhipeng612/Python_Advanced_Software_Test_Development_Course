@@ -525,13 +525,35 @@ class ProjectSerializer(serializers.Serializer):
 ### 12、Response
 
 -   对Django中的HttpResponse进行了拓展
+    
     -   会根据请求头中的Accept自动转化响应数据对应的格式
+    
 -   如果请求头中未设置Accept，则会自动采用默认方式处理响应数据（默认返回jason格式的数据）
+
 -   指定响应默认渲染类
+
+    ```
+    #在StudyDjango/settings.py文件中
+    #DRF框架所有的全局配置都存放在REST_FRAMWORK这个字典中
+    REST_FRAMWORK={
+    #默认响应渲染类
+    
+    }
+    ```
+
+    
+
+-   ![image-20200204002917341](Django%20REST%20Framework.assets/image-20200204002917341.png)
+
+-   ![image-20200204003012093](Django%20REST%20Framework.assets/image-20200204003012093.png)
+
+-   ![image-20200204003041466](Django%20REST%20Framework.assets/image-20200204003041466.png)
 
 ## 五、类视图
 
 ### 1、APIView
+
+
 
 ### 2、GenericAPIView
 

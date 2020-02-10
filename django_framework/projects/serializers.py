@@ -128,22 +128,22 @@ class ProjectModelSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         # 5. 可以使用元祖指定具体哪些模型类字段需要生成序列化器字段
         # fields元祖中指定的是, 所有序列化器字段(哪怕模型类中不包含的字段, 也需要在fields中指定)
-        fields = ('id', 'name', 'leader', 'tester', 'interfaces')
+        fields = ('name', 'leader', 'tester')
         # exclude = ('create_time', 'update_time', 'desc')
         # 6. 指定read_only为True的字段
-        # read_only_fields = ('desc', '')
+        # read_only_fields = ('leader', 'tester', 'desc')
 
         # 8. extra_kwargs是一个嵌套字典的字典
         #
-        extra_kwargs = {
-            'name': {
-                'error_messages': {'max_length': '项目名称的长度不能操作200个字节!'},
-                'read_only': True,
-                'min_length': 50,
-                'validators': [is_unique_project_name, cotain_keyword_project_name]
-            },
-            'leader': {
-                'label': '负责人',
-                'write_only': True
-            }
-        }
+        # extra_kwargs = {
+        #     'name': {
+        #         'error_messages': {'max_length': '项目名称的长度不能操作200个字节!'},
+        #         'read_only': True,
+        #         'min_length': 50,
+        #         'validators': [is_unique_project_name, cotain_keyword_project_name]
+        #     },
+        #     'leader': {
+        #         'label': '负责人',
+        #         'read_only': True
+        #     }
+        # }
