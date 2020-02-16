@@ -19,7 +19,7 @@ from django.urls import path
 from projects.views import ProjectList, ProjectDetail
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     # path('index', index),
     # path('',IndexView.as_view()),
     path('', ProjectList.as_view()),

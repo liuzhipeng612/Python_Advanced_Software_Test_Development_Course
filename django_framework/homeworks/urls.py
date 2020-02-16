@@ -18,7 +18,7 @@ from django.urls import path
 from homeworks.views import IndexView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     # path('index', index),
     path('',IndexView.as_view())
 ]
