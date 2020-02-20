@@ -9,3 +9,9 @@ class ProjectModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projects
         exclude = ('create_time', 'update_time', 'desc')
+
+
+class ProjectNamesModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Projects
+        fields = ('id', 'name')

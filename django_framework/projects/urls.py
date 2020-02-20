@@ -20,6 +20,8 @@ urlpatterns = [
     path('', views.ProjectViewSet.as_view({
         'get': 'list',
         'post': 'create'})),
+    path('names/', views.ProjectViewSet.as_view({
+        'get': 'names'})),
     path('<int:pk>/', views.ProjectViewSet.as_view({
         'get': 'retrieve',
         'put': 'update',
