@@ -130,14 +130,19 @@ REST_FRAMEWORK = {
         # 可浏览的API渲染器为第二优先级
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
+
     # 全局指定过滤引擎类
     'DEFAULT_FILTER_BACKENDS': [
         # 过滤引擎
         'django_filters.rest_framework.backends.DjangoFilterBackend',
         # 排序引擎
         'rest_framework.filters.OrderingFilter'],
+
     # 全局指定分页引擎类
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_PAGINATION_CLASS': 'utils.pagination.ManualPageNumberPagination',
-    'PAGE_SIZE': 3
+    'PAGE_SIZE': 3,
+
+    # 指定用于支持coreapi的Schema
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }

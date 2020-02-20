@@ -1,4 +1,4 @@
-# Django REST Framework
+Django REST Framework
 
 ## 一、REST API
 
@@ -559,23 +559,140 @@ class ProjectSerializer(serializers.Serializer):
 
 ### 3、Mixin
 
+- RetrieveModelMixin
+  - 提供retrieve(request,*args,**kwargs)方法
+  - 获取已存在的详情数据（一条记录）
+  - 获取成功，则返回200 OK
+  - 如果不存在，则返回404 Not Found
+- UpdateModelMixin
+  - 提供update（request,*args,**kwargs）方法，用于全更新
+  - 提供partial_update(request,*args,**kwargs)方法付，用于部分更新，支持PATCH方法
+  - 更新已存在的模型实例（更新一条记录）
+  - 更新成功，则返回200 OK
+  - 如果请求参数有误，则返回 400 Bad Request
+  - 如果不存在，则返回404 Not Found
+- DestroyModelMixin
+  - 提供 destroy(request,*args,**kwargs)方法
+  - 删除一条已存在的数据（删除一条记录）
+  - 删除成功，则返回204 No Content
+  - 如果不存在，则返回404 Not Found
+- ListModelMixin
+  - 提供list（request,*args,**kwargs）方法
+  - 提供已存在的列表数据（获取多条记录）
+  - 获取成功，则返回 200 OK
+- CreateModelMixin
+  - 提供create（request，*args，**kwargs）方法
+  - 创建新的模型实例（创建新的记录）
+  - 创建成功，则返回201Created
+  - 如果请求参数有误，则返回400 Bad Request
+
 ### 4、Concrete Generic Views
+
+- retrieveAPIView
+  - 提供get方法
+  - 继承：RetrieveModelMixin、GenericAPIView
+- updateAPIView
+  - 提供put和patch方法
+  - 继承：UpdateModelMixin、GenericAPIView
+- DestroyAPIView
+  - 提供delete方法
+  - 继承：destoryModelMixin、GenericAPIView
+- ListAPIView
+  - 提供get方法
+  - 继承：ListModelMixin、GenericAPIView
+- RetrivevUpdateAPIView
+  - 提供get、put、patch方法
+  - 继承：RetrieveModelMixin、UpdateModelMixin、GennericAPIView
+- RetieveDestroyAPIView
+  - 提供get、delete方法
+  - 继承：RetrieveModelMixin、DestroyModelMixin、GenericAPIView
+- RetieveUpdateDestroyAPIView
+  - 提供get、put、patch、delete方法
+  - 继承：RetrieveModelMixin、UpdateModelMixin、DestroyModelMixin、GenericAPIView
+- 痛点
+  - 两个类视图，不能合并
+  - 相同的get方法
+  - 两个类属土对应的url地址不一致
 
 ### 5、ViewSet
 
+| 请求方法 | 动作           | 描述                 |
+| -------- | -------------- | -------------------- |
+| GET      | retrieve       | 获取详情数据（单挑） |
+| GET      | list           | 获取列表数据（多条） |
+| POST     | create         | 创建数据             |
+| PUT      | update         | 更新数据             |
+| PATCH    | partial_update | 部分更新             |
+| DELETE   | destroy        | 删除数据             |
+
+**ViewSet类**
+
+- 继承ViewSetMixin和views.APIView
+  - ViewSetMixin支持action动作
+- 未提供get_object()、get_serializer()、queryset、serializer_class等方法
+
+**GenericViewSet类**
+
+- 继承ViewSetMixin和generics.GenericAPIView
+  - 提供get_object()、get_serializer()、queryset、serializer_class等方法
+- 在定义路由时，需要将请求方法与action动作进行绑定
+- 使用Mixins类简化程序
+
+**ModelViewSet类**
+
+- 继承CreateModelMixin、ListModelMixin、RetrieveModelMixin、UpdateModelMixin、DestroyModelMixin、GenericViewSet
+
+**ReadOnlyModelViewSet类**
+
+- 继承ListModelMixin、RetrieveModelMixin、GenericViewSet
+
 ### 6、action
+
+- 使用action装饰器
+- methods
+  - 支持的请求方式
+  - 为列表
+- detail
+  - 要处理的是否是详情资源对象（即是否通过url路径获取主键）
+  - True表示使用通过RUL获取的主键主键对应的数据对象
+  - False表示不使用URL获取主键
 
 ### 7、router
 
+- 可以使用router来自动生成路由配置
+- 提供两种路由SimpleRouter和DefaultRouter
+  - DefaultRouter会添加一个默认的API根视图
+
 ### 8、Exception
+
+- DRF能自动处理一下异常：
+  - APIExcepiton类或子类
+  - Http404
+  - PermissionDenied
 
 ## 六、生成API文档
 
 ### 1、简介
 
+- 生成API文档平台
+- 自动生成测试代码
+- 支持接口测试
+
 ### 2、安装
 
+- coreapi（必须)
+- Pygments(可选)
+- Markdown(可选)
+
 ### 3、使用coreapi
+
+- 最新版的DRF（>3.10）中，需要添加如下配置
+
+  ```python
+  REST_FRAMEWORK={
+      # 指定用于支持coreapi的Schema
+        'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema',}
+  ```
 
 ### 4、使用drf-yasg
 

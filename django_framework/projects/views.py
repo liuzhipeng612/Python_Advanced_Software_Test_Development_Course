@@ -29,6 +29,32 @@ from . import serializers
 #                      viewsets.GenericViewSet):
 
 class ProjectViewSet(viewsets.ModelViewSet):
+    """
+    create:
+    创建项目
+
+    retrieve:
+    获取项目详情数据
+
+    update:
+    完整更新项目
+
+    partial_update:
+    部分更新项目
+
+    list:
+    获取项目列表信息
+
+    destroy:
+    删除项目
+
+    names:
+    获取所有的项目名和项目ID
+
+    interfaces:
+    获取某个项目下的所有接口信息
+
+    """
     queryset = Projects.objects.all()
     serializer_class = serializers.ProjectModelSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
