@@ -43,5 +43,16 @@ class ProjectViewSet(viewsets.ModelViewSet):
     @action(methods=['get'], detail=False)
     def names(self, request, *args, **kwargs):
         queryset = self.get_queryset()
-        serializer = serializers.ProjectNamesModelSerializer(instance=queryset, many=True)
+        # serializer = serializers.ProjectNamesModelSerializer(instance=queryset, many=True)
+        serializer = self.get_serializer(instance=queryset, many=True)
         return Response(data=serializer.data)
+
+    @action(detail=True)
+    def interfaces(self, request, *args, **kwargs):
+        pass
+
+    def get_serializer_class(self):
+        # if self.action == 'names':
+        #     return serializers.ProjectNamesModelSerializer
+        # return self.serializer_class
+        return serializers.ProjectNamesModelSerializer if self.action == 'names' else self.serializer_class
