@@ -13,17 +13,34 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
+
 from . import views
 
+# 1.创建SimpleRouter路由对象
+# router = routers.SimpleRouter()
+# 使用DefaultRouter会自动创建跟路由页面
+router = routers.DefaultRouter()
+# 2.注册路由
+# 第一个一个参数为prefix路由前缀（支持正则表达式），一般添加为应用名即可
+# 第二个参数为视图集类（只有视图集类才能支持router）
+# 第三个参数为basename，指定url别名前缀
+# router.register(r'Projects', views.ProjectViewSet, basename='bs')
+router.register(r'Projects', views.ProjectViewSet)
+
 urlpatterns = [
-    path('', views.ProjectViewSet.as_view({
-        'get': 'list',
-        'post': 'create'})),
-    path('names/', views.ProjectViewSet.as_view({
-        'get': 'names'})),
-    path('<int:pk>/', views.ProjectViewSet.as_view({
-        'get': 'retrieve',
-        'put': 'update',
-        'delete': 'destroy'})),
+    # path('', views.ProjectViewSet.as_view({
+    #     'get': 'list',
+    #     'post': 'create'})),
+    # path('names/', views.ProjectViewSet.as_view({
+    #     'get': 'names'})),
+    # path('<int:pk>/', views.ProjectViewSet.as_view({
+    #     'get': 'retrieve',
+    #     'put': 'update',
+    #     'delete': 'destroy'})),
+    # 3.使用路由对象.url属性获取路由条目
+    # path('', include(router.urls)),
 ]
+# 4.或者将url添加到urlpatterns列表中
+urlpatterns += router.urls

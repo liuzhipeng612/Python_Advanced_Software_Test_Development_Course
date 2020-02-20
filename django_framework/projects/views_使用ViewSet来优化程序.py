@@ -40,10 +40,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
     # methods参数来指定该动作支持的请求方法，默认为get
     # detail参数用于指定该动作，要处理的是否为详情资源对象（url是否需要传递pk主键）
     # 如果获取详情数据，那么需要指定detail为True，否则为False
-    # url_name为路由别名
-    # url_path为路由路径
-    # 绝大多数情况是不需要指定路由别名和路径
-    # @action(methods=['get'], detail=False, url_name='nn', url_path='mm')
     @action(methods=['get'], detail=False)
     def names(self, request, *args, **kwargs):
         queryset = self.get_queryset()
