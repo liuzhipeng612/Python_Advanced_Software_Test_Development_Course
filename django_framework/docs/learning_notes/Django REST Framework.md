@@ -694,5 +694,93 @@ class ProjectSerializer(serializers.Serializer):
         'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema',}
   ```
 
+  ```python
+  from django.urls import path, include
+  from rest_framework.documentation import include_docs_urls
+  
+  urlpatterns = [
+      path('docs/', include_docs_urls(title='测试平台接口文档')),
+  ]
+  ```
+  
+  - 添加注释
+  
+    - 单一方法的视图
+  
+      ```python
+      class ProjectsListView(ListAPIView):
+      """
+      返回所有项目信息
+      """
+      ```
+  
+    - 多个方法的视图
+  
+      ```python
+      class ProjectViewSet(viewsets.ModelViewSet):
+          """
+          create:
+          创建项目
+      
+          retrieve:
+          获取项目详情数据
+      
+          update:
+          完整更新项目
+      
+          partial_update:
+          部分更新项目
+      
+          list:
+          获取项目列表信息
+      
+          destroy:
+          删除项目
+      
+          names:
+          获取所有的项目名和项目ID
+      
+          interfaces:
+          获取某个项目下的所有接口信息
+      
+          """
+      ```
+
 ### 4、使用drf-yasg
+
+- 安装
+
+  ```python
+  pip install drf-yasg
+  ```
+
+- 添加到INSTALLED_APPS中
+
+  ```python
+  INSTALLED_APPS = [
+      'drf_yasg',
+  
+  ]
+  ```
+
+- 在全局路由文件urls.poy文件中添加配置
+
+  ```python
+  from drf_yasg import openapi
+  from drf_yasg.views import get_schema_view
+  # from rest_framework import permissions
+  
+  schema_view = get_schema_view(
+      openapi.Info(
+          title='Lemon API 接口文档平台',  # 必传
+          default_version='v1',  # 必传
+          description='这是一个美轮美奂的接口文档',
+          terms_of_service='http://api.keyou.site',
+          contact=openapi.Contact(email='keyou100@qq.com'),
+          license=openapi.License(name='BSD License'),
+      ),
+      public=True,
+      # permission_classes=(permissions.AllowAny,),  # 权限类
+  )
+  ```
 

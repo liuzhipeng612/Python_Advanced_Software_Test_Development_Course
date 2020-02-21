@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'homeworks.apps.HomeworksConfig',
     'interfaces.apps.InterfacesConfig',
     'rest_framework',
+    'drf_yasg',
+
 ]
 
 MIDDLEWARE = [
