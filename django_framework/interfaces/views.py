@@ -1,18 +1,14 @@
 from django.http import Http404
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
-from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
-
 from interfaces import serializers
 from interfaces.models import Interfaces
 
 
 class InterfaceList(ViewSet):
 
-    def post(self, request):
+    def create(self, request):
         """
         创建接口
         :param request:
@@ -34,7 +30,7 @@ class InterfaceDetail(ViewSet):
         except Interfaces.DoesNotExist:
             raise Http404
 
-    def put(self, request, pk):
+    def update(self, request, pk):
         """
         完整更新接口
         :param request:
@@ -42,7 +38,10 @@ class InterfaceDetail(ViewSet):
         :return:
         """
         one_project = self.get_object(pk)
-        serializer=serializers.InterfaceModelSerializer(data=request.data)
-
-    def delete(self, request, pk):
-        pass
+        serializer = serializers.InterfaceModelSerializer(instance=one_project, data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except Exception:
+            return Response(data=serializer.errors)
+        serializer.save()
+        return Response(data=serializer.data)
