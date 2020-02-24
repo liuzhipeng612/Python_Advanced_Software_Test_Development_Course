@@ -616,6 +616,8 @@ class ProjectSerializer(serializers.Serializer):
 
 ### 5、ViewSet
 
+*将不同的视图方法使用类进行整合继承，方便应用是调用*
+
 | 请求方法 | 动作           | 描述                 |
 | -------- | -------------- | -------------------- |
 | GET      | retrieve       | 获取详情数据（单挑） |
@@ -627,8 +629,23 @@ class ProjectSerializer(serializers.Serializer):
 
 **ViewSet类**
 
-- 继承ViewSetMixin和views.APIView
-  - ViewSetMixin支持action动作
+- 继承ViewSetMixin具有和views.APIView
+  
+  - ViewSetMixin：覆盖`.as_view（）`，以便它采用`actions`关键字，该关键字将HTTP方法绑定到Resource上的操作（将HTTP请求方法绑定action关键字，即支持action动作）。例如，要创建将“ GET”和“ POST”方法绑定到“ list”和“ create”操作的具体视图，
+  
+    ```python
+    view = MyViewSet.as_view({'get': 'list', 'post': 'create'})
+    ```
+  
+  - views.APIView：
+  
+    ```python
+    # 1.继承DRF框架中的APIView之后，request是DRF中的request对象
+    # 2.Response对HttpRequest进行了拓展，HttpRequest有的功能Response都支持
+    # 3.不管前端传json还是x-www-form菜蔬，统一使用request.data
+    # 4.简化反序列化操作，支持要使用request.data即可将入参转换python内部可识别数据类型：字典
+    ```
+  
 - 未提供get_object()、get_serializer()、queryset、serializer_class等方法
 
 **GenericViewSet类**
