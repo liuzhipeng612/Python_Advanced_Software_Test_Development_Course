@@ -27,7 +27,7 @@ router = routers.DefaultRouter()
 # 第二个参数为视图集类（只有视图集类才能支持router）
 # 第三个参数为basename，指定url别名前缀
 # router.register(r'Projects', views.ProjectViewSet, basename='bs')
-router.register(r'Projects', views.ProjectViewSet)
+router.register(r'', views.ProjectViewSet)
 
 urlpatterns = [
     # path('', views.ProjectViewSet.as_view({
