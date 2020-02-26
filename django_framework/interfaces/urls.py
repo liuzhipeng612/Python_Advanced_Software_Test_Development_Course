@@ -20,6 +20,5 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'', views.InterfaceList)
-router.register(r'', views.InterfaceDetail)
 urlpatterns = []
 urlpatterns += router.urls

@@ -12,25 +12,14 @@ RetrieveModelMixin、UpdateModelMixin、DestroyModelMixin、GenericViewSet视图
 
 
 class InterfaceList(ModelViewSet):
-    """
-        create:
-        创建接口
+    queryset = Interfaces.objects.all()
+    serializer_class = serializers.InterfaceModelSerializer
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_fields = ['name', 'tester']
+    ordering_fields = ['id', 'name']
 
-        retrieve:
-        获取接口详情数据
 
-        update:
-        完整更新接口
-
-        partial_update:
-        部分更新接口
-
-        list:
-        获取接口列表信息
-
-        destroy:
-        删除接口
-        """
+class InterfaceDetail(ModelViewSet):
     queryset = Interfaces.objects.all()
     serializer_class = serializers.InterfaceModelSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]

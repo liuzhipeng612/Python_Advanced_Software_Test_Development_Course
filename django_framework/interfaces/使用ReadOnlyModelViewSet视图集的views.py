@@ -5,8 +5,7 @@ from interfaces import serializers
 from interfaces.models import Interfaces
 
 """
-使用GenericViewSet视图集，支持get_object()、get_serializer()、queryset、serializer_class等方法，
-同时使url.py路由支持根据HTTP请求方法绑定对应的action动作
+使用ReadOnlyModelViewSet视图集，支持list、retrieve两张查询类方法
 """
 
 
