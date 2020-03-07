@@ -252,7 +252,146 @@ function 函数名
 
 -   函数体调用参数
 
+    ```shell
+    函数名(){
+    	函数体$n
+    }
+    ```
 
+-   调用函数给函数传参
+
+    ```shell
+    函数名 参数
+    ```
+
+    
+
+    ### 3. input
+
+    | Format                   | Meaning                                                      |
+    | ------------------------ | ------------------------------------------------------------ |
+    | read                     | This command will read text from a keyboard and store the received text in a built-in variable REPLY. |
+    | read value               | This reads text from a keyboard or standard input and stores it into the variable value. |
+    | read first last          | This will read the first word in a variable first and the remaining text of the line in a variable last. The first word is separated by white space from the remaining words in the line. |
+    | read -a <br />array_name | This will store a list of words received in an array         |
+    | read -p prompt           | This will print the prompt and wait for the user input.The received text will be stored in the variable REPLY. |
+
+    ## 八、流程控制
+
+    ### 1. if
+
+    ```shell
+    if [ 条件 ]
+    then
+    	指令1
+    elif [ 条件2 ]
+    then
+    	指令2
+    else
+    	指令3
+    fi
+    ```
+
+    ### 2. for
+
+    ```shell
+    #格式一：
+    for 值 in 列表
+    do
+    	执行语句
+    done
+    
+    #格式二：
+    max=10
+    for ((i=1;i<=max'i++))
+    do
+    	echo "$i"
+    done
+    ```
+
+    ### 3. while
+
+    -   只要条件满足，就一直循环
+
+        ```shell
+        while 条件
+        do
+        	执行语句
+        done
+        ```
+
+    ### 4. until
+
+    -   只要条件不满足，就一直循环
+
+        ```shell
+        until 条件
+        do
+        	执行语句
+        done
+        ```
+
+    ### 5. case
+
+    ```shell
+    case 变量名 in
+    	值1）
+    		指令1
+    			;;
+    	值2）
+    		指令2
+    			;;
+    	值3）
+    		指令3
+    			;;
+    esac
+    ```
+
+    ## 九、文本处理三剑客
+    
+    ### 1. grep
+    
+    -   两种形式
+    
+        -   grep [选项]... PATTERN [FILE]...
+    
+        -   some command | grep [option] [pattern]
+    
+            | 选项 | 含义                                 |
+            | ---- | ------------------------------------ |
+            | -i   | 忽略大小写                           |
+            | -c   | 只输出匹配行的数量                   |
+            | -n   | 显示行号                             |
+            | -r   | 递归搜索                             |
+            | -E   | 支持拓展正则表达式                   |
+            | -W   | 匹配整个单词                         |
+            | -I   | 只列出匹配的文件名                   |
+            | -F   | 不支持正则，按字符串字面意思进行匹配 |
+    
+    ### 2. sed
+    
+    -   流编辑器，对文件逐行进行处理
+    -   两种形式
+        -    sed [选项]... {脚本(如果没有其他脚本)} [输入文件]...
+        -   some command | sed [option] “pattern command
+    
+    | 选项 | 含义               |
+    | ---- | ------------------ |
+    | -n   | 只打印模式匹配的行 |
+    | -f   | 加载存放动作的文件 |
+    | -r   | 支持拓展正则       |
+    | -i   | 直接修改文件       |
+    
+    **pattern模式**
+    
+    | 匹配模式              | 含义                                       |
+    | --------------------- | ------------------------------------------ |
+    | 5                     | 只处理第5行                                |
+    | 5,10                  | 只处理第5行到第10行                        |
+    | /pattern1/            | 只处理能匹配pattern1行                     |
+    | /pattern1/,/pattern2/ | 只处理从匹配pattern1的行到匹配pattern2的行 |
+    
+    
 
 
 
