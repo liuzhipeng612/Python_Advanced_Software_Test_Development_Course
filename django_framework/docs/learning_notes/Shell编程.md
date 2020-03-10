@@ -391,7 +391,28 @@ function 函数名
     | /pattern1/            | 只处理能匹配pattern1行                     |
     | /pattern1/,/pattern2/ | 只处理从匹配pattern1的行到匹配pattern2的行 |
     
+    **command命令**
     
+    -   查询
+        -   p
+            -   打印
+    -   新增
+        -   a
+            -   在匹配行后新增
+        -   i
+            -   在匹配行前新增
+        -   r
+            -   外部文件读入行后新增
+        -   w
+            -   匹配行写入外部文件
+    -   删除
+        -   d
+    -   修改
+        -   s/old/new
+            -   只修改匹配行中第一个old
+        -   s/old/new/g
+            -   修改匹配行中所有的old
+    -   
 
 
 

@@ -8,8 +8,6 @@
 
 ​	a.本题无需提交
 
- 
-
 #### 2.linux中“$?”标记有什么作用?
 
 答：查看上一条命令执行是否正确，如果正确返回0，不正确返回非0
@@ -82,11 +80,7 @@ ls: 无法访问/dlfjalsdjf: 没有那个文件或目录
     ······
     ```
 
-    
-
 2.  使用top查看动态进程
-
- 
 
 #### 5.编写如下shell程序
 
@@ -187,9 +181,7 @@ esac
 
 #### 7. 使用思维导图总结近几次课的知识点
 
- sssss
-
- 
+ 答案查看思维导图
 
 ### 二、选做题
 
@@ -201,8 +193,36 @@ esac
 
 ​	b.要求有异常数字校验
 
+```shell
+#!/bin/bash
+#Author: Daodao
+#Date: 2020-03-04 23:52:55
+#Description: 查看4个数字的和、最小值、最大值
 
-
- 
-
+function show_error() {
+    echo "Usage: $0 1 2 3 4 "
+}
+function jnum() {
+    for i in $@; do
+        expr $i + 10 &>./null
+        if [ ! $? -eq 0 ]; then
+            echo "$i不是数字"
+        fi
+    done
+}
+if [ $# -ne 4 ]; then
+    show_error
+elif [ ! "$(jnum $@ $?)" = "" ]; then
+    jnum $@ $?
+    echo "入参请输入数字"
+else
+    for i in $@; do
+        echo "$i" >>./name.txt
+    done
+    echo "这组数字中的和是：$(($1 + $2 + $3 + $4))"
+    echo "这组数字中的最小值是：$(cat /root/pysdev/dev03_shell_03/name.txt | sort -r | tail -1)"
+    echo "这组数字中的最大值是：$(cat /root/pysdev/dev03_shell_03/name.txt | sort -n | tail -1)"
+    $(sed -i '1,$d' ./name.txt)
+fi
+```
 
