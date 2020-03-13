@@ -266,153 +266,197 @@ function 函数名
 
     
 
-    ### 3. input
+### 3. input
 
-    | Format                   | Meaning                                                      |
-    | ------------------------ | ------------------------------------------------------------ |
-    | read                     | This command will read text from a keyboard and store the received text in a built-in variable REPLY. |
-    | read value               | This reads text from a keyboard or standard input and stores it into the variable value. |
-    | read first last          | This will read the first word in a variable first and the remaining text of the line in a variable last. The first word is separated by white space from the remaining words in the line. |
-    | read -a <br />array_name | This will store a list of words received in an array         |
-    | read -p prompt           | This will print the prompt and wait for the user input.The received text will be stored in the variable REPLY. |
+| Format                   | Meaning                                                      |
+| ------------------------ | ------------------------------------------------------------ |
+| read                     | This command will read text from a keyboard and store the received text in a built-in variable REPLY. |
+| read value               | This reads text from a keyboard or standard input and stores it into the variable value. |
+| read first last          | This will read the first word in a variable first and the remaining text of the line in a variable last. The first word is separated by white space from the remaining words in the line. |
+| read -a <br />array_name | This will store a list of words received in an array         |
+| read -p prompt           | This will print the prompt and wait for the user input.The received text will be stored in the variable REPLY. |
 
-    ## 八、流程控制
+## 八、流程控制
 
-    ### 1. if
+### 1. if
+
+```shell
+if [ 条件 ]
+then
+	指令1
+elif [ 条件2 ]
+then
+	指令2
+else
+	指令3
+fi
+```
+
+### 2. for
+
+```shell
+#格式一：
+for 值 in 列表
+do
+	执行语句
+done
+
+#格式二：
+max=10
+for ((i=1;i<=max'i++))
+do
+	echo "$i"
+done
+```
+
+### 3. while
+
+-   只要条件满足，就一直循环
 
     ```shell
-    if [ 条件 ]
-    then
-    	指令1
-    elif [ 条件2 ]
-    then
-    	指令2
-    else
-    	指令3
-    fi
-    ```
-
-    ### 2. for
-
-    ```shell
-    #格式一：
-    for 值 in 列表
+    while 条件
     do
     	执行语句
     done
-    
-    #格式二：
-    max=10
-    for ((i=1;i<=max'i++))
+    ```
+
+### 4. until
+
+-   只要条件不满足，就一直循环
+
+    ```shell
+    until 条件
     do
-    	echo "$i"
+    	执行语句
     done
     ```
 
-    ### 3. while
+### 5. case
 
-    -   只要条件满足，就一直循环
+```shell
+case 变量名 in
+	值1）
+		指令1
+			;;
+	值2）
+		指令2
+			;;
+	值3）
+		指令3
+			;;
+esac
+```
 
-        ```shell
-        while 条件
-        do
-        	执行语句
-        done
-        ```
+## 九、文本处理三剑客
 
-    ### 4. until
+### 1. grep
 
-    -   只要条件不满足，就一直循环
+-   两种形式
 
-        ```shell
-        until 条件
-        do
-        	执行语句
-        done
-        ```
+    -   grep [选项]... PATTERN [FILE]...
 
-    ### 5. case
+    -   some command | grep [option] [pattern]
 
-    ```shell
-    case 变量名 in
-    	值1）
-    		指令1
-    			;;
-    	值2）
-    		指令2
-    			;;
-    	值3）
-    		指令3
-    			;;
-    esac
-    ```
+        | 选项 | 含义                                 |
+        | ---- | ------------------------------------ |
+        | -i   | 忽略大小写                           |
+        | -c   | 只输出匹配行的数量                   |
+        | -n   | 显示行号                             |
+        | -r   | 递归搜索                             |
+        | -E   | 支持拓展正则表达式                   |
+        | -W   | 匹配整个单词                         |
+        | -I   | 只列出匹配的文件名                   |
+        | -F   | 不支持正则，按字符串字面意思进行匹配 |
 
-    ## 九、文本处理三剑客
-    
-    ### 1. grep
-    
-    -   两种形式
-    
-        -   grep [选项]... PATTERN [FILE]...
-    
-        -   some command | grep [option] [pattern]
-    
-            | 选项 | 含义                                 |
-            | ---- | ------------------------------------ |
-            | -i   | 忽略大小写                           |
-            | -c   | 只输出匹配行的数量                   |
-            | -n   | 显示行号                             |
-            | -r   | 递归搜索                             |
-            | -E   | 支持拓展正则表达式                   |
-            | -W   | 匹配整个单词                         |
-            | -I   | 只列出匹配的文件名                   |
-            | -F   | 不支持正则，按字符串字面意思进行匹配 |
-    
-    ### 2. sed
-    
-    -   流编辑器，对文件逐行进行处理
-    -   两种形式
-        -    sed [选项]... {脚本(如果没有其他脚本)} [输入文件]...
-        -   some command | sed [option] “pattern command
-    
-    | 选项 | 含义               |
-    | ---- | ------------------ |
-    | -n   | 只打印模式匹配的行 |
-    | -f   | 加载存放动作的文件 |
-    | -r   | 支持拓展正则       |
-    | -i   | 直接修改文件       |
-    
-    **pattern模式**
-    
-    | 匹配模式              | 含义                                       |
-    | --------------------- | ------------------------------------------ |
-    | 5                     | 只处理第5行                                |
-    | 5,10                  | 只处理第5行到第10行                        |
-    | /pattern1/            | 只处理能匹配pattern1行                     |
-    | /pattern1/,/pattern2/ | 只处理从匹配pattern1的行到匹配pattern2的行 |
-    
-    **command命令**
-    
-    -   查询
-        -   p
-            -   打印
-    -   新增
-        -   a
-            -   在匹配行后新增
-        -   i
-            -   在匹配行前新增
-        -   r
-            -   外部文件读入行后新增
-        -   w
-            -   匹配行写入外部文件
-    -   删除
-        -   d
-    -   修改
-        -   s/old/new
-            -   只修改匹配行中第一个old
-        -   s/old/new/g
-            -   修改匹配行中所有的old
-    -   
+### 2. sed
 
+-   流编辑器，对文件逐行进行处理
+-   两种形式
+    -    sed [选项]... {脚本(如果没有其他脚本)} [输入文件]...
+    -   some command | sed [option] “pattern command
 
+| 选项 | 含义               |
+| ---- | ------------------ |
+| -n   | 只打印模式匹配的行 |
+| -f   | 加载存放动作的文件 |
+| -r   | 支持拓展正则       |
+| -i   | 直接修改文件       |
+
+**pattern模式**
+
+| 匹配模式              | 含义                                       |
+| --------------------- | ------------------------------------------ |
+| 5                     | 只处理第5行                                |
+| 5,10                  | 只处理第5行到第10行                        |
+| /pattern1/            | 只处理能匹配pattern1行                     |
+| /pattern1/,/pattern2/ | 只处理从匹配pattern1的行到匹配pattern2的行 |
+
+**command命令**
+
+-   查询
+    -   p
+        -   打印
+-   新增
+    -   a
+        -   在匹配行后新增
+    -   i
+        -   在匹配行前新增
+    -   r
+        -   外部文件读入行后新增
+    -   w
+        -   匹配行写入外部文件
+-   删除
+    -   d
+-   修改
+    -   s/old/new
+        -   只修改匹配行中第一个old
+    -   s/old/new/g
+        -   修改匹配行中所有的old
+    -   s/old/new/ig
+        -   忽略大小写
+
+### 3. awk
+
+- 文本处理工具，处理数据并生成结果报告
+
+- 两种形式
+
+  - awk 'BEGIN{} pattern {commands} END{}' file
+
+  - some command | awk 'BEGIN{} pattern {commands} END{}' file
+
+    | 格式       | 含义                         |
+    | ---------- | ---------------------------- |
+    | BEGIN{}    | 处理数据之前执行，只执行一次 |
+    | pattern    | 匹配模式                     |
+    | {commands} | 处理的命令                   |
+    | END{}      | 处理数据之后执行，只执行一次 |
+
+  **内置变量**
+
+  | 内置标量                     | 含义                                |
+  | ---------------------------- | ----------------------------------- |
+  | $0                           | 整行内容                            |
+  | $1~&n                        | 当前行的第1~n个字段                 |
+  | NF (Number Field)            | 当前行字段数                        |
+  | NR (Number Row)              | 当前行行号，从1开始                 |
+  | FS (Field Separator)         | 输入字段分隔符，默认为空格或者tab键 |
+  | RS (Row Separator)           | 输入行分隔符，默认为回车符          |
+  | OFS (Output Field Separator) | 输出字段分隔符，默认为空格          |
+  | ORS (Outpu Row Separator)    | 输出行分隔符，默认为回车符          |
+
+  **printf格式符**
+
+| 格式符 | 含义       |
+| ------ | ---------- |
+| %s     | 字符串     |
+| %d     | 十进制数字 |
+| %f     | 浮点数     |
+
+| 修饰符 | 含义   |
+| ------ | ------ |
+| +      | 右对齐 |
+| -      | 左对齐 |
+
+## 十、 日志分析综合演练
 
