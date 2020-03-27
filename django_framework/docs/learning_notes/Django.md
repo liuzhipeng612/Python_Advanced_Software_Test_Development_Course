@@ -193,10 +193,59 @@
     python manage.py runserver 端口
     ```
 
-- 停止运行Django项目
+  - 提示异常
 
-  - 直接关闭命令行窗口终止服务器
-  - Terminal终端输入命令Ctrl+C终止服务器
+    ```shell
+    You have 17 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
+    Run 'python manage.py migrate' to apply them.
+    ```
+
+    - 停止运行Django项目
+      - 直接关闭命令行窗口终止服务器(不使用环境是可操作)
+      - Terminal终端输入命令Ctrl+C终止服务器
+
+    - 执行```python manage.py migrate```执行迁移
+
+      ```zsh
+      (dev) *[master][~/pysdev/python_course/api_platform]$ python manage.py migrate
+      Operations to perform:
+        Apply all migrations: admin, auth, contenttypes, sessions
+      Running migrations:
+        Applying contenttypes.0001_initial... OK
+        Applying auth.0001_initial... OK
+        Applying admin.0001_initial... OK
+        Applying admin.0002_logentry_remove_auto_add... OK
+        Applying admin.0003_logentry_add_action_flag_choices... OK
+        Applying contenttypes.0002_remove_content_type_name... OK
+        Applying auth.0002_alter_permission_name_max_length... OK
+        Applying auth.0003_alter_user_email_max_length... OK
+        Applying auth.0004_alter_user_username_opts... OK
+        Applying auth.0005_alter_user_last_login_null... OK
+        Applying auth.0006_require_contenttypes_0002... OK
+        Applying auth.0007_alter_validators_add_error_messages... OK
+        Applying auth.0008_alter_user_username_max_length... OK
+        Applying auth.0009_alter_user_last_name_max_length... OK
+        Applying auth.0010_alter_group_name_max_length... OK
+        Applying auth.0011_update_proxy_permissions... OK
+        Applying sessions.0001_initial... OK
+      ```
+
+    - 再次启动Django
+
+      ```zsh
+      (dev) *[master][~/pysdev/python_course/api_platform]$ python manage.py runserver 1080
+      Watching for file changes with StatReloader
+      Performing system checks...
+      
+      System check identified no issues (0 silenced).
+      March 27, 2020 - 17:58:28
+      Django version 3.0.3, using settings 'api_platform.settings'
+      Starting development server at http://127.0.0.1:1080/
+      Quit the server with CONTROL-C.
+      ```
+
+      
+
 
 ## 6.修改Django环境配置
 
@@ -337,7 +386,7 @@ python manage.py startapp name
 
           ```python
         path('index/', index)
-          ```
+        ```
 
            - 类视图作为元素：使用**类方法名.as_view()**作为path的第二个参数
 
