@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'projects.apps.ProjectsConfig',
+    'interfaces.apps.InterfacesConfig',
+    'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -76,8 +80,12 @@ WSGI_APPLICATION = 'api_platform.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
+        'NAME': 'api_platform',  # 数据库名
+        'USER': 'apiroot',  # 数据库用户名
+        'PASSWORD': 'RkFwHAF6bjTtpja3',  # 数据库密码
+        'HOST': 'localhost',  # 数据库主机域名或者IP
+        'PORT': 3306  # 数据库端口
     }
 }
 
@@ -142,12 +150,12 @@ REST_FRAMEWORK = {
     # 一定要指定, 每一页获取的条数
     'PAGE_SIZE':
     3,
-
     # 指定用于支持coreapi的Schema
     'DEFAULT_SCHEMA_CLASS':
     'rest_framework.schemas.coreapi.AutoSchema',
 }
 
+# 后期配置
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
