@@ -23,4 +23,5 @@ urlpatterns = [
 
     # 访问projects时会自动进入projects.urls子路由
     path('projects/', include('projects.urls')),
+    path('api/', include('rest_framework.urls'))
 ]
