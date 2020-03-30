@@ -35,10 +35,18 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('projects', include('projects.urls')),  # 将路径为projects的全部指向interfaces子路由
-    path('interfaces/', include('interfaces.urls')),  # 将路径为interfaces的全部指向interfaces子路由
+    path('projects',
+         include('projects.urls')),  # 将路径为projects的全部指向interfaces子路由
+    path('interfaces/',
+         include('interfaces.urls')),  # 将路径为interfaces的全部指向interfaces子路由
     path('docs/', include_docs_urls(title='测试平台接口文档')),
-    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$',
+            schema_view.without_ui(cache_timeout=0),
+            name='schema-json'),
+    path('swagger/',
+         schema_view.with_ui('swagger', cache_timeout=0),
+         name='schema-swagger-ui'),
+    path('redoc/',
+         schema_view.with_ui('redoc', cache_timeout=0),
+         name='schema-redoc'),
 ]

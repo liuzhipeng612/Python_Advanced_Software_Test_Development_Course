@@ -341,7 +341,7 @@ DELETE 	/projects/6		# 返回空
 
 -   添加到您的设置。`'rest_framework'``INSTALLED_APPS`
 
-    ```
+    ```python
     INSTALLED_APPS = [
         ...
         'rest_framework',
@@ -350,7 +350,7 @@ DELETE 	/projects/6		# 返回空
 
 -   如果您打算使用可浏览 API，您可能还需要添加 REST 框架的登录视图和注销视图。将以下内容添加到根文件中。`urls.py`
 
-    ```
+    ```python
     urlpatterns = [
         ...
         url(r'^api-auth/', include('rest_framework.urls'))
@@ -525,7 +525,7 @@ class ProjectSerializer(serializers.Serializer):
 ### 12、Response
 
 -   对Django中的HttpResponse进行了拓展
-    
+  
     -   会根据请求头中的Accept自动转化响应数据对应的格式
     
 -   如果请求头中未设置Accept，则会自动采用默认方式处理响应数据（默认返回jason格式的数据）
