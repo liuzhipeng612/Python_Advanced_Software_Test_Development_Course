@@ -11,23 +11,26 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# 将apps设为根目录，下面两个二选一
+sys.path.append(os.path.join(BASE_DIR, "apps"))
+# sys.path.insert(0,os.path.join(BASE_DIR,"apps"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$tjyej##mn1&j3kus3hwj^s@$yf88q1(on*9zm4x*z0dz1e18a'
+SECRET_KEY = '&q5@i4z6pg)l#9p!yjutkwoguwi&-rd!v&o)bj01=adad%k=#h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# 设置允许访问的主机，默认只能使用本地地址访问项目
 # ALLOWED_HOSTS = ["外网ip", "localhost", "127.0.0.1"]
-# 设置可以用于访问项目的地址(ip、域名)
-# 默认只能使用本地地址访问项目
-# '*'代表所有
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -39,12 +42,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'projects.apps.ProjectsConfig',
+    'interfaces.apps.InterfacesConfig',
+    'users.apps.UsersConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    # 临时关闭csr安全校验
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -76,8 +84,14 @@ WSGI_APPLICATION = 'api_platform.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
+        'NAME': 'api_platform_stg',  # 数据库名
+        'USER': 'api_platform_stg',  # 数据库用户名
+        'PASSWORD': 'BjbrmnG2Z6Ym6pCG',  # 数据库密码
+        'HOST': '111.229.64.99',  # 数据库主机域名或者IP
+        'PORT': 3306  # 数据库端口
     }
 }
 
@@ -106,8 +120,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
+# 设置语言
 LANGUAGE_CODE = 'zh-hans'
 
+# 设置时区
 TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
@@ -121,33 +137,52 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# 后期配置
+# 覆盖REST_FRAMEWORK(DRF)默认配置
 REST_FRAMEWORK = {
     # 默认响应渲染类
     'DEFAULT_RENDERER_CLASSES': (
-        # json渲染器为第一优先级
+        # json渲染类为第一条优先
         'rest_framework.renderers.JSONRenderer',
         # 可浏览的API渲染器为第二优先级
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
-    # django_filters.rest_framework.backends.DjangoFilterBackend
+
+    # 全局指定过滤引擎类
     'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend',
+        # 过滤引擎
+        'django_filters.rest_framework.backends.DjangoFilterBackend',
+        # 排序引擎
         'rest_framework.filters.OrderingFilter'
     ],
-    # DEFAULT_PAGINATION_CLASS全局指定分页引擎类
+
+    # 全局指定分页引擎类
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_PAGINATION_CLASS':
     'utils.pagination.ManualPageNumberPagination',
-    # 一定要指定, 每一页获取的条数
     'PAGE_SIZE':
     3,
 
     # 指定用于支持coreapi的Schema
     'DEFAULT_SCHEMA_CLASS':
     'rest_framework.schemas.coreapi.AutoSchema',
+
+    # 指定认证类(指定的是认证的方式)
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 指定使用JWT Token认证
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # DRF框架默认情况下, 使用的是用户会话认证
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
+    ],
+
+    # 授权类(指定的是认证成功之后能干嘛!)
+    'DEFAULT_PERMISSION_CLASSES': [
+        # DRF框架默认的权限为AllowAny(允许所有用户来访问)
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }
 
+# 配置日志
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -178,7 +213,8 @@ LOGGING = {
             'filename': os.path.join(BASE_DIR, "logs/test.log"),  # 日志文件的位置
             'maxBytes': 100 * 1024 * 1024,
             'backupCount': 10,
-            'formatter': 'verbose'
+            'formatter': 'verbose',
+            'encoding': 'utf-8'
         },
     },
     'loggers': {

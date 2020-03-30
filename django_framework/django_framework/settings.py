@@ -24,7 +24,7 @@ SECRET_KEY = 'zcaet(@9=2#w@4ib22^+2(3+rv99$9_+=q^us6))3(vlh+q6a&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'interfaces.apps.InterfacesConfig',
     'rest_framework',
     'drf_yasg',
-
 ]
 
 MIDDLEWARE = [
@@ -58,8 +57,7 @@ ROOT_URLCONF = 'django_framework.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,10 +78,10 @@ WSGI_APPLICATION = 'django_framework.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
-        'NAME': 'django',  # 数据库名
-        'USER': 'root',  # 数据库用户名
-        'PASSWORD': '123456',  # 数据库密码
-        'HOST': 'localhost',  # 数据库主机域名或者IP
+        'NAME': 'api_platform_dev',  # 数据库名
+        'USER': 'api_platform_dev',  # 数据库用户名
+        'PASSWORD': 'BTPLRaeLS5kXZ6xb',  # 数据库密码
+        'HOST': '111.229.64.99',  # 数据库主机域名或者IP
         'PORT': 3306  # 数据库端口
     }
 }
@@ -93,16 +91,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -138,13 +140,17 @@ REST_FRAMEWORK = {
         # 过滤引擎
         'django_filters.rest_framework.backends.DjangoFilterBackend',
         # 排序引擎
-        'rest_framework.filters.OrderingFilter'],
+        'rest_framework.filters.OrderingFilter'
+    ],
 
     # 全局指定分页引擎类
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'DEFAULT_PAGINATION_CLASS': 'utils.pagination.ManualPageNumberPagination',
-    'PAGE_SIZE': 3,
+    'DEFAULT_PAGINATION_CLASS':
+    'utils.pagination.ManualPageNumberPagination',
+    'PAGE_SIZE':
+    3,
 
     # 指定用于支持coreapi的Schema
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_SCHEMA_CLASS':
+    'rest_framework.schemas.coreapi.AutoSchema',
 }
