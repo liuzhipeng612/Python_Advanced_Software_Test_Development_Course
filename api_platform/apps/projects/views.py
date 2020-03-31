@@ -1,13 +1,13 @@
 import logging
 
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
-from rest_framework import viewsets
 from rest_framework.response import Response
 
-from .models import Projects
 from . import serializers
+from .models import Projects
 
 logger = logging.getLogger(name="test")
 logger.error("这里有一个严重的错误")
@@ -45,6 +45,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ['name', 'leader', 'tester']
     ordering_fields = ['id', 'name', 'leader']
+    permission_classes = [permissions.IsAdminUser]
 
     @action(methods=['get'], detail=False)
     def names(self, request, *args, **kwargs):

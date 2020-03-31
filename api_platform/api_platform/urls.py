@@ -17,11 +17,13 @@ from django.contrib import admin
 
 # 启用子路由需要导入include模块
 from django.urls import path, include
+from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # 访问projects时会自动进入projects.urls子路由
     path('projects/', include('projects.urls')),
+    path('docs/', include_docs_urls(title='接口自动化测试平台-接口文档')),
     path('api/', include('rest_framework.urls'))
 ]

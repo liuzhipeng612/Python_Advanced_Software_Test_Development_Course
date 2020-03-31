@@ -84,8 +84,6 @@ WSGI_APPLICATION = 'api_platform.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
         'NAME': 'api_platform_stg',  # 数据库名
         'USER': 'api_platform_stg',  # 数据库用户名
