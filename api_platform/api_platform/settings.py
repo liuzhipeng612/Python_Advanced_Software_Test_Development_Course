@@ -101,19 +101,19 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+            'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
+            'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
         'NAME':
-        'django.contrib.auth.password_validation.CommonPasswordValidator',
+            'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
         'NAME':
-        'django.contrib.auth.password_validation.NumericPasswordValidator',
+            'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -158,13 +158,13 @@ REST_FRAMEWORK = {
     # 全局指定分页引擎类
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_PAGINATION_CLASS':
-    'utils.pagination.ManualPageNumberPagination',
+        'utils.pagination.ManualPageNumberPagination',
     'PAGE_SIZE':
-    3,
+        3,
 
     # 指定用于支持coreapi的Schema
     'DEFAULT_SCHEMA_CLASS':
-    'rest_framework.schemas.coreapi.AutoSchema',
+        'rest_framework.schemas.coreapi.AutoSchema',
 
     # 指定认证类(指定的是认证的方式)
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -189,7 +189,7 @@ LOGGING = {
     'formatters': {
         'verbose': {
             'format':
-            '%(asctime)s - [%(levelname)s] - %(name)s - [msg]%(message)s - [%(filename)s:%(lineno)d ]'
+                '%(asctime)s - [%(levelname)s] - %(name)s - [msg]%(message)s - [%(filename)s:%(lineno)d ]'
         },
         'simple': {
             'format': '%(asctime)s - [%(levelname)s] - [msg]%(message)s'
