@@ -645,7 +645,7 @@ python manage.py startapp name
   
     - 在models.py中定义模型类
   
-      - 嵌套Meta类可以更改表明
+      - 嵌套Meta类可以更改表名
     
       ```python
       from django.db import models

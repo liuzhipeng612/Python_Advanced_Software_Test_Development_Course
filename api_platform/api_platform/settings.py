@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+import datetime
 import os
 import sys
 
@@ -46,11 +46,14 @@ INSTALLED_APPS = [
     'interfaces.apps.InterfacesConfig',
     'users.apps.UsersConfig',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # 需要添加在ComonMiddleware中间件之前
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 临时关闭csr安全校验
     # 'django.middleware.csrf.CsrfViewMiddleware',
@@ -58,6 +61,21 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# CORS_ORIGIN_ALLOW_ALL为True, 指定所有域名(ip)都可以访问后端接口, 默认为False
+CORS_ORIGIN_ALLOW_ALL = True
+
+# CORS_ORIGIN_WHITELIST指定能够访问后端接口的ip或域名列表
+# CORS_ORIGIN_WHITELIST = [
+#     "http://127.0.0.1:8080",
+#     "http://localhost:8080",
+#     "http://192.168.1.63:8080",
+#     "http://127.0.0.1:9000",
+#     "http://localhost:9000",
+# ]
+
+# 允许跨域时携带Cookie, 默认为False
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'api_platform.urls'
 
@@ -155,10 +173,10 @@ REST_FRAMEWORK = {
 
     # 全局指定分页引擎类
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'DEFAULT_PAGINATION_CLASS':
-        'utils.pagination.ManualPageNumberPagination',
-    'PAGE_SIZE':
-        3,
+    # 'DEFAULT_PAGINATION_CLASS':
+    #     'utils.pagination.ManualPageNumberPagination',
+    # 'PAGE_SIZE':
+    #     3,
 
     # 指定用于支持coreapi的Schema
     'DEFAULT_SCHEMA_CLASS':
@@ -167,19 +185,28 @@ REST_FRAMEWORK = {
     # 指定认证类(指定的是认证的方式)
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 指定使用JWT Token认证
-        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         # DRF框架默认情况下, 使用的是用户会话认证
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication'
     ],
 
     # 授权类(指定的是认证成功之后能干嘛!)
-    'DEFAULT_PERMISSION_CLASSES': [
-        # DRF框架默认的权限为AllowAny(允许所有用户来访问)
-        'rest_framework.permissions.IsAuthenticated',
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     # DRF框架默认的权限为AllowAny(允许所有用户来访问)
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ],
 }
-
+JWT_AUTH = {
+    # 默认token的过期时间是5分钟，可以指定过期时间为1天
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    # 修改token值的前缀
+    # 前端在传递token值时，Authorization作为key，值为：token前缀+空格+token值
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    # 指定返回前端数据的处理函数
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+        'utils.jwt_handler.jwt_response_payload_handler',
+}
 # 配置日志
 LOGGING = {
     'version': 1,

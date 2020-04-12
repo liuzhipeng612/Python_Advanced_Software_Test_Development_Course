@@ -9,8 +9,8 @@ from rest_framework.response import Response
 from . import serializers
 from .models import Projects
 
-logger = logging.getLogger(name="test")
-logger.error("这里有一个严重的错误")
+# logger = logging.getLogger(name="test")
+# logger.error("这里有一个严重的错误")
 
 
 class ProjectViewSet(viewsets.ModelViewSet):

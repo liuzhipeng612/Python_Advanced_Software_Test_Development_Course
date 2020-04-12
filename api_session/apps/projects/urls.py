@@ -1,4 +1,4 @@
-"""api_platform URL Configuration
+"""api_session URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -13,18 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+from . import views
+from rest_framework import routers
 
-# 启用子路由需要导入include模块
-from django.urls import path, include
-from rest_framework.documentation import include_docs_urls
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-
-    # 访问projects时会自动进入projects.urls子路由
-    path('projects/', include('projects.urls')),
-    path('docs/', include_docs_urls(title='接口自动化测试平台-接口文档')),
-    path('api/', include('rest_framework.urls')),
-    path('user/', include('users.urls'))
-]
+router = routers.DefaultRouter()
+router.register(r'', views.ProjectViewSet)
+urlpatterns = []
+urlpatterns += router.urls
