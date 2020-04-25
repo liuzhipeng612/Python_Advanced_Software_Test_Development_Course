@@ -42,8 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'projects.apps.ProjectsConfig',
+    'configures.apps.ConfiguresConfig',
+    'debugtalks.apps.DebugtalksConfig',
+    'envs.apps.AppConfig',
     'interfaces.apps.InterfacesConfig',
+    'projects.apps.ProjectsConfig',
+    'reports.apps.ReportsConfig',
+    'testcases.apps.TestcasesConfig',
+    'testsuits.apps.TestsuitsConfig',
     'users.apps.UsersConfig',
     'rest_framework',
     'corsheaders',
@@ -187,8 +193,9 @@ REST_FRAMEWORK = {
         # 指定使用JWT Token认证
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         # DRF框架默认情况下, 使用的是用户会话认证
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication'
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.permissions.AllowAny'
     ],
 
     # 授权类(指定的是认证成功之后能干嘛!)

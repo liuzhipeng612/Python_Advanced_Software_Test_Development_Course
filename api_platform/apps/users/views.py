@@ -14,6 +14,7 @@ class RegisterView(CreateAPIView):
     # 如果某个视图中, 没有获取信息的接口, 那么可以不用指定queryset类属性
 
 
+# 校验用户名
 class UsernameValidateView(APIView):
     def get(self, request, username):
         data = {
@@ -23,10 +24,11 @@ class UsernameValidateView(APIView):
         return Response(data)
 
 
+# 校验邮箱
 class EmailValidateView(APIView):
     def get(self, request, email):
         data = {
-            "username": email,
-            "count": User.objects.filter(username=email).count()
+            "email": email,
+            "count": User.objects.filter(email=email).count()
         }
         return Response(data)

@@ -1,0 +1,47 @@
+# 1. 所有的用例以及用例数据都存放在yaml或者json格式的配置文件中
+# 2. name区域: 来定义接口名称
+name: demo
+# 3. base_url区域: 定义base url
+base_url: http://127.0.0.1:8000
+# 4. variables区域: 来创建全局变量
+variables:
+    var1: "root"
+    var2: "123456"
+# 5. request区域: 来定义请求信息
+request:
+    # 6. 接口url地址
+    url: /user/login/
+    # 7. 请求方法
+    # PUT、GET、get、put、delete
+    method: POST
+    # 8. 指定请求头的信息
+    headers:
+        # Content-Type: "application/json"
+        # User-Agent: "Mozilla/5.0 Winter Swimming"
+        # ${函数名(参数1, 参数2, ...)}
+        User-Agent: ${get_user_agent()}
+    data:
+        # username: "root"
+        # password: "123456"
+        # 2. ${ENV(环境变量名)}
+        username: ${ENV(USERNAME)}
+        password: ${ENV(PASSWORD)}
+        # 3. $变量名, 调用variables区域下的全局变量(能在variables区域下的所有地方来调用)
+#    username: $var1
+#    password: $var2
+#    params:
+#        name: "KeYou"
+#        age: 17
+# 1. 设置断言
+validate:
+    # a. eq: 指定断言类型, 断言相等, 还可使用"equals", "==", "is"
+    # lt: 断言小于, less_than
+    # le gt ge ne
+    # contains: 断言包含
+    # b. 列表中第一个参数为实际值
+    # status_code, headers, content, text, json, encoding, ok, reason, url
+    # c. 列表中第二个参数为期望值
+    # - eq: ["status_codeddssa", 200]
+    - {"check": "status_code", "comparator": "eq", "expect": 200}
+    - {"check": "headers.Content-Type", "comparator": "eq", "expect": "application/json"}
+    - {"check": "content.username", "comparator": "contains", "expect": "root"}
