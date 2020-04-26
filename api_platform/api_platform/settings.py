@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'configures.apps.ConfiguresConfig',
     'debugtalks.apps.DebugtalksConfig',
-    'envs.apps.AppConfig',
+    'envs.apps.EnvsConfig',
     'interfaces.apps.InterfacesConfig',
     'projects.apps.ProjectsConfig',
     'reports.apps.ReportsConfig',

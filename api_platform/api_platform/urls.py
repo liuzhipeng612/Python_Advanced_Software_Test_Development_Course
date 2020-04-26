@@ -21,10 +21,15 @@ from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    # 访问projects时会自动进入projects.urls子路由
+    path('configures/', include('configures.urls')),
+    path('debugtalks/', include('debugtalks.urls')),
+    path('envs/', include('envs.urls')),
+    path('interfaces/', include('interfaces.urls')),
     path('projects/', include('projects.urls')),
+    path('reports/', include('reports.urls')),
+    path('testcases/', include('testcases.urls')),
+    path('testsuits/', include('testsuits.urls')),
+    path('user/', include('users.urls')),
     path('docs/', include_docs_urls(title='接口自动化测试平台-接口文档')),
     path('api/', include('rest_framework.urls')),
-    path('user/', include('users.urls'))
 ]
