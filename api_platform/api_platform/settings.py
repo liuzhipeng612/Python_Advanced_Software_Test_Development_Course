@@ -178,11 +178,7 @@ REST_FRAMEWORK = {
     ],
 
     # 全局指定分页引擎类
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    # 'DEFAULT_PAGINATION_CLASS':
-    #     'utils.pagination.ManualPageNumberPagination',
-    # 'PAGE_SIZE':
-    #     3,
+    'DEFAULT_PAGINATION_CLASS': 'utils.pagination.GlobalPageNumberPagination',
 
     # 指定用于支持coreapi的Schema
     'DEFAULT_SCHEMA_CLASS':
