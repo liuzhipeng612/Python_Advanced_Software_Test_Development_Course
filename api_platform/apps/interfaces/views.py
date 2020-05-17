@@ -4,10 +4,9 @@ from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
 from rest_framework.response import Response
 
-from utils.pagination import InterfacePageNumberPagination
 from . import serializers
 from .models import Interfaces
-from .utils import get_count_by_project
+from .utils import get_count_by_interface
 
 
 # logger = logging.getLogger(name="test")
@@ -56,14 +55,13 @@ class InterfaceViewSet(viewsets.ModelViewSet):
     """
     queryset = Interfaces.objects.all()
     serializer_class = serializers.InterfaceModelSerializer
-    pagination_class = InterfacePageNumberPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ['name', 'tester']
     ordering_fields = ['id', 'name', ]
 
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
-        response.data['results'] = get_count_by_project(response.data['results'])
+        response.data['results'] = get_count_by_interface(response.data['results'])
         return response
 
     @action(detail=False)

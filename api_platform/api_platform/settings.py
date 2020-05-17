@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'projects.apps.ProjectsConfig',
     'reports.apps.ReportsConfig',
     'testcases.apps.TestcasesConfig',
-    'testsuits.apps.TestsuitsConfig',
+    'testsuites.apps.TestsuitesConfig',
     'users.apps.UsersConfig',
     'rest_framework',
     'corsheaders',
